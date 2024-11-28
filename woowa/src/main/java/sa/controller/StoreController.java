@@ -42,7 +42,7 @@ public class StoreController {
     public SimpleResDto addMenu(@PathVariable Long userId,
                                 @PathVariable Long storeId,
                                 @RequestBody MenuAddDto menuAddDto){
-        Long storeId = storeService.addMenu(userId, storeId, menuAddDto);
+        storeService.addMenu(userId, storeId, menuAddDto);
 
         return new SimpleResDto(storeId);
     }
