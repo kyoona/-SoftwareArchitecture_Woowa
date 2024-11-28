@@ -2,6 +2,7 @@ package sa.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import sa.dto.MenuAddDto;
 import sa.dto.SimpleResDto;
 import sa.dto.StoreRequestDto;
 import sa.service.StoreService;
@@ -35,5 +36,14 @@ public class StoreController {
         Long storeRequestInfoId = storeService.denyStore(userId, requestId);
 
         return new SimpleResDto(storeRequestInfoId);
+    }
+
+    @PostMapping("/{storeId}")
+    public SimpleResDto addMenu(@PathVariable Long userId,
+                                @PathVariable Long storeId,
+                                @RequestBody MenuAddDto menuAddDto){
+        Long storeId = storeService.addMenu(userId, storeId, menuAddDto);
+
+        return new SimpleResDto(storeId);
     }
 }

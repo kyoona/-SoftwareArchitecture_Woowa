@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sa.domain.*;
+import sa.dto.MenuAddDto;
 import sa.dto.StoreRequestDto;
 import sa.repository.StoreRepository;
 import sa.repository.StoreRequestInfoRepository;
@@ -52,6 +53,17 @@ public class StoreService {
         storeRequestInfo.setStatus(StoreRequestStatus.DENY);
 
         return requestId;
+    }
+
+    @Transactional
+    public Long addMenu(Long userId, Long storeId, MenuAddDto menuAddDto) {
+        User user = userRepository.findById(userId).orElseThrow();
+        checkStore(user);
+
+        Store store = storeRepository.findById(storeId).orElseThrow();
+        store.addMenu(menuAddDto.getMenuName(), menuAddDto.getMenuPrice());
+
+        return storeId;
     }
 
     private void checkManager(User user){
