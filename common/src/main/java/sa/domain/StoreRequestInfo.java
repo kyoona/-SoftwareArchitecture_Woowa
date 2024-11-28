@@ -33,4 +33,12 @@ public class StoreRequestInfo {
 
         return storeRequestInfo;
     }
+
+    public Store createStore(){
+        return new Store(this.storeName, this.location, this.deliveryPrice, this.minimumOrderPrice);
+    }
+
+    public void setStatus(StoreRequestStatus status) {
+        this.status = status;
+    }
 }

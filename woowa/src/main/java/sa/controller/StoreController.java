@@ -20,4 +20,20 @@ public class StoreController {
 
         return new SimpleResDto(storeRequestInfoId);
     }
+
+    @PostMapping("/{requestId}/accept")
+    public SimpleResDto acceptStore(@PathVariable Long userId,
+                                     @PathVariable Long requestId){
+        Long storeId = storeService.acceptStore(userId, requestId);
+
+        return new SimpleResDto(storeId);
+    }
+
+    @PostMapping("/{requestId}/deny")
+    public SimpleResDto denyStore(@PathVariable Long userId,
+                                    @PathVariable Long requestId){
+        Long storeRequestInfoId = storeService.denyStore(userId, requestId);
+
+        return new SimpleResDto(storeRequestInfoId);
+    }
 }
