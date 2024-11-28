@@ -1,12 +1,11 @@
 package sa.domain;
 
 import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Embeddable
 public class Location {
 
