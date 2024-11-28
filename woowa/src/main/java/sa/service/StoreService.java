@@ -15,7 +15,7 @@ public class StoreService {
 
     @Transactional
     public void test(){
-        User user1 = new User("user1");
-        userRepository.save(user1);
+//        User user1 = new User("user1");
+//        userRepository.save(user1);
     }
 }
