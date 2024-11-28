@@ -20,6 +20,9 @@ public class StoreService {
 
     @Transactional
     public Long requestStore(Long userId, StoreRequestDto storeRequestDto) {
+        User user = userRepository.findById(userId).orElseThrow();
+        checkStore(user);
+
         StoreRequestInfo storeRequestInfo = StoreRequestInfo.create(storeRequestDto.getMinimumOrderPrice(), storeRequestDto.getDeliveryPrice(), storeRequestDto.getLocation(), storeRequestDto.getStoreName());
         storeRequestInfoRepository.save(storeRequestInfo);
 
@@ -29,9 +32,7 @@ public class StoreService {
     @Transactional
     public Long acceptStore(Long userId, Long requestId) {
         User user = userRepository.findById(userId).orElseThrow();
-        if(user.getUserRole() != UserRole.MANAGER){
-            throw new RuntimeException();
-        }
+        checkManager(user);
 
         StoreRequestInfo storeRequestInfo = storeRequestInfoRepository.findById(requestId).orElseThrow();
         storeRequestInfo.setStatus(StoreRequestStatus.ACCEPT);
@@ -45,13 +46,23 @@ public class StoreService {
     @Transactional
     public Long denyStore(Long userId, Long requestId) {
         User user = userRepository.findById(userId).orElseThrow();
-        if(user.getUserRole() != UserRole.MANAGER){
-            throw new RuntimeException();
-        }
+        checkManager(user);
 
         StoreRequestInfo storeRequestInfo = storeRequestInfoRepository.findById(requestId).orElseThrow();
         storeRequestInfo.setStatus(StoreRequestStatus.DENY);
 
         return requestId;
+    }
+
+    private void checkManager(User user){
+        if(user.getUserRole() != UserRole.MANAGER){
+            throw new RuntimeException();
+        }
+    }
+
+    private void checkStore(User user){
+        if(user.getUserRole() != UserRole.STORE){
+            throw new RuntimeException();
+        }
     }
 }
