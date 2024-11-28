@@ -2,10 +2,10 @@ package sa.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import sa.domain.Store;
 import sa.dto.MenuAddDto;
 import sa.dto.SimpleResDto;
 import sa.dto.StoreRequestDto;
+import sa.dto.StoreResDto;
 import sa.service.StoreService;
 
 import java.util.List;
@@ -51,7 +51,7 @@ public class StoreController {
     }
 
     @GetMapping
-    public List<Store> getStoreList(@PathVariable Long userId){
+    public List<StoreResDto> getStoreList(@PathVariable Long userId){
         return storeService.getStoreList(userId);
     }
 }

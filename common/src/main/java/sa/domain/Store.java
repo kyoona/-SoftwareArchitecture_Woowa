@@ -24,7 +24,7 @@ public class Store {
     private int deliveryPrice;
     private int minimumOrderPrice;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Menu> menuList = new ArrayList<>();
 
     protected Store(String storeName, Location location, int deliveryPrice, int minimumOrderPrice) {

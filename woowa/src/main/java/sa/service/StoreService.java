@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sa.domain.*;
 import sa.dto.MenuAddDto;
 import sa.dto.StoreRequestDto;
+import sa.dto.StoreResDto;
 import sa.repository.StoreRepository;
 import sa.repository.StoreRequestInfoRepository;
 import sa.repository.UserRepository;
@@ -68,8 +69,10 @@ public class StoreService {
         return storeId;
     }
 
-    public List<Store> getStoreList(Long userId) {
-        return storeRepository.findAll();
+    public List<StoreResDto> getStoreList(Long userId) {
+        return storeRepository.findAll().stream()
+                .map(StoreResDto::new)
+                .toList();
     }
 
     private void checkManager(User user){
