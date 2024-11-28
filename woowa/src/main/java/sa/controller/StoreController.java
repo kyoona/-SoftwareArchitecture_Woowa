@@ -2,10 +2,13 @@ package sa.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import sa.domain.Store;
 import sa.dto.MenuAddDto;
 import sa.dto.SimpleResDto;
 import sa.dto.StoreRequestDto;
 import sa.service.StoreService;
+
+import java.util.List;
 
 @RequestMapping("/woowa/users/{userId}/stores")
 @RequiredArgsConstructor
@@ -45,5 +48,10 @@ public class StoreController {
         storeService.addMenu(userId, storeId, menuAddDto);
 
         return new SimpleResDto(storeId);
+    }
+
+    @GetMapping
+    public List<Store> getStoreList(@PathVariable Long userId){
+        return storeService.getStoreList(userId);
     }
 }

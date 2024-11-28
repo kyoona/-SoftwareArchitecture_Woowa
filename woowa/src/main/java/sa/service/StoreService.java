@@ -10,6 +10,8 @@ import sa.repository.StoreRepository;
 import sa.repository.StoreRequestInfoRepository;
 import sa.repository.UserRepository;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
@@ -64,6 +66,10 @@ public class StoreService {
         store.addMenu(menuAddDto.getMenuName(), menuAddDto.getMenuPrice());
 
         return storeId;
+    }
+
+    public List<Store> getStoreList(Long userId) {
+        return storeRepository.findAll();
     }
 
     private void checkManager(User user){
