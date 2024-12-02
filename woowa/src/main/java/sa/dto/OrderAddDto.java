@@ -13,6 +13,7 @@ import java.util.List;
 public class OrderAddDto {
 
     private String phoneNumber;
+    private Long storeId;
     private List<OrderMenuDto> menuList;
     private Location location;
 }

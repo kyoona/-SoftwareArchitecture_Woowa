@@ -26,12 +26,15 @@ public class OrderMenu {
     @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
 
-    protected static OrderMenu create(Menu menu, Order order){
+    private int count;
+
+    protected static OrderMenu create(Menu menu, int count, Order order){
         OrderMenu orderMenu = new OrderMenu();
         orderMenu.menu = menu;
         orderMenu.menuName = menu.getMenuName();
         orderMenu.menuPrice = menu.getMenuPrice();
         orderMenu.order = order;
+        orderMenu.count = count;
 
         return orderMenu;
     }

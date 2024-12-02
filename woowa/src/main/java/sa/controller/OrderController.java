@@ -3,6 +3,7 @@ package sa.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import sa.dto.OrderAddDto;
+import sa.dto.OrderResDto;
 import sa.dto.SimpleResDto;
 import sa.service.OrderService;
 
@@ -20,5 +21,14 @@ public class OrderController {
         Long orderId = orderService.requestOrder(userId, orderAddDto);
 
         return new SimpleResDto(orderId);
+    }
+
+    @GetMapping("/{orderId}")
+    public OrderResDto getOrder(@PathVariable Long userId,
+                                @PathVariable Long orderId){
+
+        OrderResDto result = orderService.getOrder(userId, orderId);
+
+        return result;
     }
 }

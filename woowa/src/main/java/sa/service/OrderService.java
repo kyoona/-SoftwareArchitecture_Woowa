@@ -5,10 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sa.domain.Menu;
 import sa.domain.Order;
+import sa.domain.Store;
 import sa.domain.User;
 import sa.dto.OrderAddDto;
 import sa.dto.OrderMenuDto;
+import sa.dto.OrderResDto;
 import sa.repository.OrderRepository;
+import sa.repository.StoreRepository;
 import sa.repository.UserRepository;
 
 import java.util.List;
@@ -22,10 +25,12 @@ public class OrderService {
 
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
+    private final StoreRepository storeRepository;
 
     @Transactional
     public Long requestOrder(Long userId, OrderAddDto orderAddDto) {
         User user = userRepository.findById(userId).orElseThrow();
+        Store store = storeRepository.findById(orderAddDto.getStoreId()).orElseThrow();
 
         List<Long> menuIdList = orderAddDto.getMenuList().stream()
                 .map(OrderMenuDto::getMenuId)
@@ -38,11 +43,19 @@ public class OrderService {
                         (m) -> m.getCount()
                 ));
 
-        Order order = Order.create(user, orderAddDto.getLocation(), orderMenuMap);
+        Order order = Order.create(user, store, orderAddDto.getLocation(), orderMenuMap);
         orderRepository.save(order);
 
         //TODO 결제 요청 produce
 
         return order.getId();
+    }
+
+    public OrderResDto getOrder(Long userId, Long orderId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        Order order = orderRepository.findById(orderId).orElseThrow();
+
+        order.getStore();
+        return new OrderResDto(order);
     }
 }

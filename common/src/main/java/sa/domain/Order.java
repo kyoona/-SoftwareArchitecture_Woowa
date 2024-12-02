@@ -39,9 +39,10 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus = OrderStatus.WAIT;
 
-    public static Order create(User user, Location location, Map<Menu, Integer> menuList){
+    public static Order create(User user, Store store, Location location, Map<Menu, Integer> menuList){
         Order order = new Order();
         order.user = user;
+        order.store = store;
         order.location = location;
 
         menuList.forEach((menu, count) -> order.addMenu(menu, count));
@@ -50,7 +51,7 @@ public class Order {
     }
 
     private void addMenu(Menu menu, int count){
-        OrderMenu orderMenu = OrderMenu.create(menu, this);
+        OrderMenu orderMenu = OrderMenu.create(menu, count, this);
         this.orderMenuList.add(orderMenu);
         this.totalPrice += menu.getMenuPrice() * count;
     }
