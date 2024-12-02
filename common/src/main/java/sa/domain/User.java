@@ -15,14 +15,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-
     private String userName;
 
     @Embedded
     private Location location;
 
-    public User(String userName, Location location) {
-        this.userName = userName;
-        this.location = location;
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
+
+    public static User create(String userName, Location location, UserRole userRole) {
+        User user = new User();
+        user.userName = userName;
+        user.location = location;
+        user.userRole = userRole;
+
+        return user;
     }
 }
