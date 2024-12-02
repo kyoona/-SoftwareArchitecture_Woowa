@@ -46,6 +46,7 @@ public class Order {
         order.location = location;
 
         menuList.forEach((menu, count) -> order.addMenu(menu, count));
+        order.totalPrice += store.getDeliveryPrice();
 
         return order;
     }

@@ -44,6 +44,8 @@ public class OrderService {
                 ));
 
         Order order = Order.create(user, store, orderAddDto.getLocation(), orderMenuMap);
+        checkMinimumOrderPrice(order.getTotalPrice(), store.getDeliveryPrice(), store.getMinimumOrderPrice());
+
         orderRepository.save(order);
 
         //TODO 결제 요청 produce
@@ -57,5 +59,11 @@ public class OrderService {
 
         order.getStore();
         return new OrderResDto(order);
+    }
+
+    private void checkMinimumOrderPrice(int totalPrice, int deliveryPrice, int minimumOrderPrice){
+        if(totalPrice - deliveryPrice < minimumOrderPrice){
+            throw new RuntimeException("배달 최소 금액 미만");
+        }
     }
 }
