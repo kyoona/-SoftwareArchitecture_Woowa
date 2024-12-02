@@ -10,6 +10,9 @@ import sa.domain.User;
 import sa.dto.OrderAddDto;
 import sa.dto.OrderMenuDto;
 import sa.dto.OrderResDto;
+import sa.kafka.KafkaProducer;
+import sa.kafka.KafkaTopic;
+import sa.kafka.PaymentRequestMsg;
 import sa.repository.OrderRepository;
 import sa.repository.StoreRepository;
 import sa.repository.UserRepository;
@@ -26,6 +29,8 @@ public class OrderService {
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
     private final StoreRepository storeRepository;
+
+    private final KafkaProducer kafkaProducer;
 
     @Transactional
     public Long requestOrder(Long userId, OrderAddDto orderAddDto) {
@@ -48,7 +53,7 @@ public class OrderService {
 
         orderRepository.save(order);
 
-        //TODO 결제 요청 produce
+        kafkaProducer.sendMessage(KafkaTopic.payment_request, new PaymentRequestMsg(order.getId(), userId, order.getTotalPrice()));
 
         return order.getId();
     }
