@@ -9,12 +9,14 @@ import sa.domain.Store;
 @AllArgsConstructor
 public class StoreResDto {
 
+    private Long storeId;
     private String storeName;
     private Location location;
     private int deliveryPrice;
     private int minimumOrderPrice;
 
     public StoreResDto(Store store) {
+        this.storeId = store.getId();
         this.storeName = store.getStoreName();
         this.location = store.getLocation();
         this.deliveryPrice = store.getDeliveryPrice();
