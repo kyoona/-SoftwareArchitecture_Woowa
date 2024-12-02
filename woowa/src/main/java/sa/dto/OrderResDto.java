@@ -14,7 +14,7 @@ public class OrderResDto {
     private Long storeId;
     private String storeName;
     private int totalPrice;
-    private List<MenuResDto> menuList = new ArrayList<>();
+    private List<OrderMenuResDto> menuList = new ArrayList<>();
     private Location location;
     private OrderStatus orderStatus;
 
@@ -26,7 +26,7 @@ public class OrderResDto {
         this.orderStatus = order.getOrderStatus();
 
         order.getOrderMenuList().forEach((om) -> {
-            menuList.add(new MenuResDto(om));
+            menuList.add(new OrderMenuResDto(om));
         });
     }
 }

@@ -2,10 +2,7 @@ package sa.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import sa.dto.MenuAddDto;
-import sa.dto.SimpleResDto;
-import sa.dto.StoreRequestDto;
-import sa.dto.StoreResDto;
+import sa.dto.*;
 import sa.service.StoreService;
 
 import java.util.List;
@@ -53,5 +50,11 @@ public class StoreController {
     @GetMapping
     public List<StoreResDto> getStoreList(@PathVariable Long userId){
         return storeService.getStoreList(userId);
+    }
+
+    @GetMapping("/{storeId}")
+    public StoreDetailResDto getStoreDetail(@PathVariable Long userId,
+                                            @PathVariable Long storeId){
+        return storeService.getStoreDetail(userId, storeId);
     }
 }

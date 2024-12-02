@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sa.domain.*;
 import sa.dto.MenuAddDto;
+import sa.dto.StoreDetailResDto;
 import sa.dto.StoreRequestDto;
 import sa.dto.StoreResDto;
 import sa.repository.StoreRepository;
@@ -73,6 +74,12 @@ public class StoreService {
         return storeRepository.findAll().stream()
                 .map(StoreResDto::new)
                 .toList();
+    }
+
+    public StoreDetailResDto getStoreDetail(Long userId, Long storeId) {
+        Store store = storeRepository.findById(storeId).orElseThrow();
+
+        return new StoreDetailResDto(store);
     }
 
     private void checkManager(User user){
