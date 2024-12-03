@@ -31,4 +31,13 @@ public class OrderController {
 
         return result;
     }
+
+    @GetMapping("/{orderId}/accept")
+    public SimpleResDto acceptOrder(@PathVariable Long userId,
+                                    @PathVariable Long orderId){
+
+        orderService.acceptOrder(userId, orderId);
+
+        return new SimpleResDto(orderId);
+    }
 }

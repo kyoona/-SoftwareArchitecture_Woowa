@@ -97,9 +97,24 @@ public class OrderService {
         }
     }
 
+    @Transactional
+    public void acceptOrder(Long userId, Long orderId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        checkStore(user);
+        Order order = orderRepository.findById(orderId).orElseThrow();
+
+        order.setOrderStatus(OrderStatus.ACCEPT);
+    }
+
     private void checkMinimumOrderPrice(int totalPrice, int deliveryPrice, int minimumOrderPrice){
         if(totalPrice - deliveryPrice < minimumOrderPrice){
             throw new RuntimeException("배달 최소 금액 미만");
+        }
+    }
+
+    private void checkStore(User user){
+        if(user.getUserRole() != UserRole.STORE){
+            throw new RuntimeException();
         }
     }
 }
