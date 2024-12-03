@@ -27,7 +27,8 @@ public class KafkaConsumer {
     @KafkaListener(topics = {"deliver_status"}, groupId = "woowa", concurrency = "1")
     public void consumeDeliveryStatus(ConsumerRecord<String, String> data){
         try {
-//            PaymentResponseMsg message = objectMapper.readValue(data.value(), PaymentResponseMsg.class);
+            DeliveryStatusMsg message = objectMapper.readValue(data.value(), DeliveryStatusMsg.class);
+            orderService.setDeliveryStatus(message.getOrderId(), message.getDeliveryStatus());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

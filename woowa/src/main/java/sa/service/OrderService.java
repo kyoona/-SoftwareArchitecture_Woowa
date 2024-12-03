@@ -7,6 +7,7 @@ import sa.domain.*;
 import sa.dto.OrderAddDto;
 import sa.dto.OrderMenuDto;
 import sa.dto.OrderResDto;
+import sa.kafka.DeliveryStatus;
 import sa.kafka.KafkaProducer;
 import sa.kafka.KafkaTopic;
 import sa.kafka.PaymentRequestMsg;
@@ -72,6 +73,16 @@ public class OrderService {
             order.setOrderStatus(OrderStatus.WAIT);
             //event publish
             //scheduler로 3분 후 작업 예약
+        }
+    }
+
+    @Transactional
+    public void setDeliveryStatus(Long orderId, DeliveryStatus deliveryStatus) {
+        Order order = orderRepository.findById(orderId).orElseThrow();
+        if (deliveryStatus.equals(DeliveryStatus.START)) {
+            order.setOrderStatus(OrderStatus.DELIVERY);
+        } else {
+            order.setOrderStatus(OrderStatus.FINISH);
         }
     }
 
