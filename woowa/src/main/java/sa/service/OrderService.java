@@ -106,6 +106,15 @@ public class OrderService {
         order.setOrderStatus(OrderStatus.ACCEPT);
     }
 
+    @Transactional
+    public void denyOrder(Long userId, Long orderId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        checkStore(user);
+        Order order = orderRepository.findById(orderId).orElseThrow();
+
+        order.setOrderStatus(OrderStatus.DENY);
+    }
+
     private void checkMinimumOrderPrice(int totalPrice, int deliveryPrice, int minimumOrderPrice){
         if(totalPrice - deliveryPrice < minimumOrderPrice){
             throw new RuntimeException("배달 최소 금액 미만");

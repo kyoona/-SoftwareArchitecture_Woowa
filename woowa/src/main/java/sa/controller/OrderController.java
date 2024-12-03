@@ -35,8 +35,15 @@ public class OrderController {
     @GetMapping("/{orderId}/accept")
     public SimpleResDto acceptOrder(@PathVariable Long userId,
                                     @PathVariable Long orderId){
-
         orderService.acceptOrder(userId, orderId);
+
+        return new SimpleResDto(orderId);
+    }
+
+    @GetMapping("/{orderId}/deny")
+    public SimpleResDto denyOrder(@PathVariable Long userId,
+                                    @PathVariable Long orderId){
+        orderService.denyOrder(userId, orderId);
 
         return new SimpleResDto(orderId);
     }
