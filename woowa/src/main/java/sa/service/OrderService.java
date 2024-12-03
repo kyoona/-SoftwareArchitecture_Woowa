@@ -7,6 +7,7 @@ import sa.domain.*;
 import sa.dto.OrderAddDto;
 import sa.dto.OrderMenuDto;
 import sa.dto.OrderResDto;
+import sa.event.OrderEventPublisher;
 import sa.kafka.DeliveryStatus;
 import sa.kafka.KafkaProducer;
 import sa.kafka.KafkaTopic;
@@ -14,6 +15,7 @@ import sa.kafka.PaymentRequestMsg;
 import sa.repository.OrderRepository;
 import sa.repository.StoreRepository;
 import sa.repository.UserRepository;
+import sa.scheduler.OrderScheduler;
 
 import java.util.List;
 import java.util.Map;
@@ -29,6 +31,8 @@ public class OrderService {
     private final StoreRepository storeRepository;
 
     private final KafkaProducer kafkaProducer;
+    private final OrderScheduler orderScheduler;
+    private final OrderEventPublisher orderEventPublisher;
 
     @Transactional
     public Long requestOrder(Long userId, OrderAddDto orderAddDto) {
@@ -71,8 +75,7 @@ public class OrderService {
             order.setOrderStatus(OrderStatus.PAYMENT_FAILED);
         } else {
             order.setOrderStatus(OrderStatus.WAIT);
-            //event publish
-            //scheduler로 3분 후 작업 예약
+            orderScheduler.reserve(orderId, () -> orderEventPublisher.publishOrderEvent(orderId));
         }
     }
 
@@ -83,6 +86,14 @@ public class OrderService {
             order.setOrderStatus(OrderStatus.DELIVERY);
         } else {
             order.setOrderStatus(OrderStatus.FINISH);
+        }
+    }
+
+    @Transactional
+    public void checkOrderAcceptAndCancel(Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow();
+        if(order.getOrderStatus().equals(OrderStatus.WAIT)){
+            order.setOrderStatus(OrderStatus.CANCEL);
         }
     }
 

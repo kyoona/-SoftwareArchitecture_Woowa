@@ -1,4 +1,3 @@
-/*
 package sa.scheduler;
 
 import lombok.RequiredArgsConstructor;
@@ -17,9 +16,10 @@ public class OrderScheduler {
     private final TaskScheduler scheduler;
     private final ConcurrentHashMap<Long, ScheduledFuture> orderTask = new ConcurrentHashMap<>();
 
-    public void reserve(Long orderId){
-//        ScheduledFuture<?> future = scheduler.scheduleWithFixedDelay(()->{}, delayTime);
-//        orderTask.put(orderId, future);
+    public void reserve(Long orderId, Runnable runnable){
+        Duration duration = getDurationFor3Min();
+        ScheduledFuture<?> future = scheduler.scheduleWithFixedDelay(runnable, duration);
+        orderTask.put(orderId, future);
     }
 
     public void cancel(Long orderId){
@@ -30,8 +30,7 @@ public class OrderScheduler {
         }
     }
 
-    private Duration getDuration(LocalDateTime time){
-        return Duration.between(LocalDateTime.now(), time);
+    private Duration getDurationFor3Min(){
+        return Duration.between(LocalDateTime.now(), LocalDateTime.now().plusMinutes(3));
     }
 }
-*/
