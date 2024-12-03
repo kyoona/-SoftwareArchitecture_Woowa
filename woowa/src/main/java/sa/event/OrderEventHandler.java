@@ -9,7 +9,7 @@ import sa.service.OrderService;
 @Component
 public class OrderEventHandler {
 
-    private OrderService orderService;
+    private final OrderService orderService;
 
     @EventListener
     public void checkOrderAccept(OrderEvent orderEvent){
