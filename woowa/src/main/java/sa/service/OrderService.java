@@ -3,10 +3,7 @@ package sa.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sa.domain.Menu;
-import sa.domain.Order;
-import sa.domain.Store;
-import sa.domain.User;
+import sa.domain.*;
 import sa.dto.OrderAddDto;
 import sa.dto.OrderMenuDto;
 import sa.dto.OrderResDto;
@@ -64,6 +61,18 @@ public class OrderService {
 
         order.getStore();
         return new OrderResDto(order);
+    }
+
+    @Transactional
+    public void setPaymentStatus(Long orderId, boolean success) {
+        Order order = orderRepository.findById(orderId).orElseThrow();
+        if (success) {
+            order.setOrderStatus(OrderStatus.PAYMENT_FAILED);
+        } else {
+            order.setOrderStatus(OrderStatus.WAIT);
+            //event publish
+            //scheduler로 3분 후 작업 예약
+        }
     }
 
     private void checkMinimumOrderPrice(int totalPrice, int deliveryPrice, int minimumOrderPrice){
