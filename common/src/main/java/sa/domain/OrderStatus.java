@@ -1,5 +1,5 @@
 package sa.domain;
 
 public enum OrderStatus {
-    WAIT, ACCEPT, DELIVERY
+    WAIT, PAYMENT_SUCCESS, PAYMENT_FAILED, ACCEPT, DENY, DELIVERY, FINISH, CANCEL
 }

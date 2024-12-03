@@ -3,14 +3,12 @@ package sa.kafka;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentResponseMsg {
+public class DeliveryStatusMsg {
 
     private Long orderId;
-    private boolean isSuccess;
+    private DeliveryStatus deliveryStatus;
 }
