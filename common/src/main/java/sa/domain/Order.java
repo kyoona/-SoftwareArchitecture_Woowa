@@ -56,4 +56,8 @@ public class Order {
         this.orderMenuList.add(orderMenu);
         this.totalPrice += menu.getMenuPrice() * count;
     }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
 }
