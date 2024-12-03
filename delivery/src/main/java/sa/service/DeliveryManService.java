@@ -20,7 +20,7 @@ public class DeliveryManService {
     @Transactional
     public Long requestDeliveryMan(Long userId, DeliveryManRequestDto deliveryManRequestDto) {
         User user = userRepository.findById(userId).orElseThrow();
-        checkManager(user);
+        checkDeliveryMan(user);
 
         User deliveryMan = User.create(deliveryManRequestDto.getDeliveryManName(), deliveryManRequestDto.getLocation(), UserRole.DELIVERYMAN);
         userRepository.save(deliveryMan);
@@ -31,7 +31,7 @@ public class DeliveryManService {
     @Transactional
     public Long acceptDeliveryMan(Long userId, Long requestId) {
         User user = userRepository.findById(userId).orElseThrow();
-        checkDeliveryMan(user);
+        checkManager(user);
 
         DeliveryManRequestInfo deliveryManRequestInfo = deliveryManRequestInfoRepository.findById(requestId).orElseThrow();
         deliveryManRequestInfo.setStatus(DeliveryManRequestStatus.ACCEPT);
