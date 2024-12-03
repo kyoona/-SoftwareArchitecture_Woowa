@@ -36,7 +36,7 @@ public class SpringPaymentApplication {
             WoowaPaymentRepository woowaPaymentRepository
     ) {
 
-        EnumMap<PaymentMethodType, PaymentMethodRepository> repositoryMap = new EnumMap<PaymentMethodType, PaymentMethodRepository>(PaymentMethodType.class);
+        EnumMap<PaymentMethodType, PaymentMethodRepository> repositoryMap = new EnumMap<>(PaymentMethodType.class);
         repositoryMap.put(PaymentMethodType.ACCOUNT_TRANSFER, accountTransferRepository);
         repositoryMap.put(PaymentMethodType.CREDIT_CARD, creditCardRepository);
         repositoryMap.put(PaymentMethodType.WOOWA_PAYMENT, woowaPaymentRepository);

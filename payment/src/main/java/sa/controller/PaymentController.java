@@ -1,8 +1,8 @@
 package sa.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import sa.domain.PaymentStatus;
 import sa.dto.PaymentDto;
 import sa.service.PaymentService;
 import sa.service.ValidatorService;
@@ -16,14 +16,18 @@ public class PaymentController {
 
     private final ValidatorService validatorService;
 
-    public PaymentDto processPayment(PaymentDto paymentDto) {
+    @PostMapping("/request")
+    public PaymentDto processPayment(@RequestBody PaymentDto paymentDto) {
+        //System.out.println("paymentDto.getPaymentMethodType() = " + paymentDto.getPaymentMethodType());
         paymentService.processPayment(paymentDto);
 
         return paymentDto;
     }
 
-    public PaymentDto cancelPayment(PaymentDto paymentDto) {
-
+    @PostMapping
+    public PaymentDto cancelPayment() {
+        PaymentDto paymentDto = new PaymentDto();
+        paymentDto.setPaymentStatus(PaymentStatus.ACCEPT);
         return paymentDto;
     }
 }

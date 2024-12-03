@@ -3,11 +3,9 @@ package sa.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sa.domain.Payment;
-import sa.domain.PaymentMethod;
-import sa.domain.PaymentMethodType;
-import sa.domain.PaymentStatus;
+import sa.domain.*;
 import sa.dto.PaymentDto;
+import sa.repository.AccountTransferRepository;
 import sa.repository.PaymentMethodRepository;
 import sa.repository.PaymentRepository;
 
@@ -22,6 +20,7 @@ public class PaymentService {
 
     private final EnumMap<PaymentMethodType, PaymentMethodRepository> repositoryMap;
 
+    @Transactional
     public Long processPayment(PaymentDto paymentDto) {
         PaymentMethod paymentMethod = (PaymentMethod) repositoryMap.get(paymentDto.getPaymentMethodType()).findByUserId(paymentDto.getUserId());
         paymentMethod.pay(paymentDto.getTotalPrice());

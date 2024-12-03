@@ -11,7 +11,7 @@ import static sa.domain.QWoowaPayment.woowaPayment;
 @Repository
 public class WoowaPaymentRepository implements PaymentMethodRepository<WoowaPayment> {
 
-    private JPAQueryFactory query;
+    private final JPAQueryFactory query;
 
     @Override
     public WoowaPayment save(WoowaPayment paymentMethod) {

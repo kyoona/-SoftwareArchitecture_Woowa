@@ -12,7 +12,7 @@ import static sa.domain.QAccountTransfer.accountTransfer;
 @Repository
 public class AccountTransferRepository implements PaymentMethodRepository<AccountTransfer> {
 
-    private JPAQueryFactory query;
+    private final JPAQueryFactory query;
 
     @Override
     public AccountTransfer save(AccountTransfer paymentMethod) {

@@ -11,7 +11,7 @@ import static sa.domain.QCreditCard.creditCard;
 @Repository
 public class CreditCardRepository implements PaymentMethodRepository<CreditCard> {
 
-    private JPAQueryFactory query;
+    private final JPAQueryFactory query;
 
     @Override
     public CreditCard save(CreditCard paymentMethod) {
