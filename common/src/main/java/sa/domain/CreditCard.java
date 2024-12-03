@@ -1,7 +1,6 @@
 package sa.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,13 +33,14 @@ public class CreditCard implements PaymentMethod {
     }
 
     @Override
-    public int pay(int amount) {
-        return 0;
-    }
+    public int pay(int amount) { return amount; }
 
     @Override
-    public int refund(int amount) {
-        return 0;
+    public int refund(int amount) { return amount; }
+
+    @Override
+    public PaymentMethodType getPaymentMethodType() {
+        return PaymentMethodType.CREDIT_CARD;
     }
 
     private boolean isExpired() {

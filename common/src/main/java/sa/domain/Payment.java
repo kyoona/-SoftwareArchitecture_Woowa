@@ -1,7 +1,6 @@
 package sa.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,14 +17,18 @@ public class Payment {
 
     private Long userId;
 
+    private PaymentMethodType paymentMethodType;
+
     private int totalPrice;
 
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus = PaymentStatus.WAIT;
 
-    public Payment(Long userId, int totalPrice) {
+    public Payment(Long userId, PaymentMethodType paymentMethodType, int totalPrice, PaymentStatus paymentStatus) {
         this.userId = userId;
+        this.paymentMethodType = paymentMethodType;
         this.totalPrice = totalPrice;
+        this.paymentStatus = paymentStatus;
     }
 
     public void setPaymentStatus(PaymentStatus paymentStatus) {

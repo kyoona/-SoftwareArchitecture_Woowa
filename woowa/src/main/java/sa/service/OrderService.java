@@ -3,10 +3,7 @@ package sa.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sa.domain.Menu;
-import sa.domain.Order;
-import sa.domain.Store;
-import sa.domain.User;
+import sa.domain.*;
 import sa.dto.OrderAddDto;
 import sa.dto.OrderMenuDto;
 import sa.dto.OrderResDto;
@@ -53,7 +50,7 @@ public class OrderService {
 
         orderRepository.save(order);
 
-        kafkaProducer.sendMessage(KafkaTopic.payment_request, new PaymentRequestMsg(order.getId(), userId, order.getTotalPrice()));
+        kafkaProducer.sendMessage(KafkaTopic.payment_request, new PaymentRequestMsg(order.getId(), userId, orderAddDto.getPaymentMethodType(),order.getTotalPrice()));
 
         return order.getId();
     }

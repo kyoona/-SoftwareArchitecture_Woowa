@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sa.domain.Location;
+import sa.domain.PaymentMethod;
+import sa.domain.PaymentMethodType;
 
 import java.util.List;
 
@@ -16,4 +18,5 @@ public class OrderAddDto {
     private Long storeId;
     private List<OrderMenuDto> menuList;
     private Location location;
+    private PaymentMethodType paymentMethodType;
 }

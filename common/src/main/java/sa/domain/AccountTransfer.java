@@ -1,7 +1,6 @@
 package sa.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +16,9 @@ public class AccountTransfer implements PaymentMethod {
     private Long id;
 
     private long userId;
+
     private String accountNumber;
+
     private long balance;
 
     public AccountTransfer(long userId, String accountNumber, long balance) {
@@ -28,11 +29,18 @@ public class AccountTransfer implements PaymentMethod {
 
     @Override
     public int pay(int amount) {
-        return 0;
+        balance -= amount;
+        return amount;
     }
 
     @Override
     public int refund(int amount) {
-        return 0;
+        balance += amount;
+        return amount;
+    }
+
+    @Override
+    public PaymentMethodType getPaymentMethodType() {
+        return PaymentMethodType.ACCOUNT_TRANSFER;
     }
 }
