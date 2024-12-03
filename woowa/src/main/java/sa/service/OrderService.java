@@ -92,7 +92,7 @@ public class OrderService {
     @Transactional
     public void checkOrderAcceptAndCancel(Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow();
-        if(order.getOrderStatus().equals(OrderStatus.WAIT)){
+        if(order.getOrderStatus().equals(OrderStatus.PAYMENT_SUCCESS)){
             order.setOrderStatus(OrderStatus.CANCEL);
         }
     }
@@ -115,6 +115,16 @@ public class OrderService {
         order.setOrderStatus(OrderStatus.DENY);
     }
 
+    public List<OrderResDto> getWaitOrderList(Long userId, Long storeId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        checkStore(user);
+
+        List<Order> waitOrderList = orderRepository.findByStoreIdAndOrderStatus(storeId, OrderStatus.PAYMENT_SUCCESS);
+        return waitOrderList.stream()
+                .map(OrderResDto::new)
+                .toList();
+    }
+
     private void checkMinimumOrderPrice(int totalPrice, int deliveryPrice, int minimumOrderPrice){
         if(totalPrice - deliveryPrice < minimumOrderPrice){
             throw new RuntimeException("배달 최소 금액 미만");
@@ -126,4 +136,5 @@ public class OrderService {
             throw new RuntimeException();
         }
     }
+
 }

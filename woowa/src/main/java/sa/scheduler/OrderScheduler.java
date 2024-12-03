@@ -2,6 +2,7 @@ package sa.scheduler;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -13,7 +14,7 @@ import java.util.concurrent.ScheduledFuture;
 @Component
 public class OrderScheduler {
 
-    private final TaskScheduler scheduler;
+    private TaskScheduler scheduler = new ConcurrentTaskScheduler();
     private final ConcurrentHashMap<Long, ScheduledFuture> orderTask = new ConcurrentHashMap<>();
 
     public void reserve(Long orderId, Runnable runnable){

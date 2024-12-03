@@ -7,6 +7,8 @@ import sa.dto.OrderResDto;
 import sa.dto.SimpleResDto;
 import sa.service.OrderService;
 
+import java.util.List;
+
 @RequestMapping("/woowa/users/{userId}/orders")
 @RequiredArgsConstructor
 @RestController
@@ -32,7 +34,7 @@ public class OrderController {
         return result;
     }
 
-    @GetMapping("/{orderId}/accept")
+    @PostMapping("/{orderId}/accept")
     public SimpleResDto acceptOrder(@PathVariable Long userId,
                                     @PathVariable Long orderId){
         orderService.acceptOrder(userId, orderId);
@@ -40,11 +42,19 @@ public class OrderController {
         return new SimpleResDto(orderId);
     }
 
-    @GetMapping("/{orderId}/deny")
+    @PostMapping("/{orderId}/deny")
     public SimpleResDto denyOrder(@PathVariable Long userId,
                                     @PathVariable Long orderId){
         orderService.denyOrder(userId, orderId);
 
         return new SimpleResDto(orderId);
+    }
+
+    @GetMapping("/stores/{storeId}/wait")
+    public List<OrderResDto> getWaitOrderList(@PathVariable Long userId,
+                                              @PathVariable Long storeId){
+        List<OrderResDto> result = orderService.getWaitOrderList(userId, storeId);
+
+        return result;
     }
 }
