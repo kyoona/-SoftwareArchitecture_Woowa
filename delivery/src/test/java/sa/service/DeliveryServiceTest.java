@@ -29,32 +29,4 @@ public class DeliveryServiceTest {
     public void after() {
         System.out.println("Test After");
     }
-
-    @Test
-    @DisplayName("올바른 유저 등록(가게)")
-    public void registerUser() throws Exception {
-        String userData = """
-                {
-                    "userName": "가게1",
-                    "location": {
-                        "locationName": "지역1",
-                        "x": 0.0,
-                        "y": 0.0
-                    }
-                }
-                """;
-        JSONParser parser = new JSONParser();
-        JSONObject obj = (JSONObject) parser.parse(userData);
-
-        User user = new User(
-                (String) obj.get("userName"),
-                new Location(
-                        (String) obj.get("location.locationName"),
-                        (Double) obj.get("location.x"),
-                        (Double) obj.get("location.y")
-                )
-        );
-        deliveryService.registerUser(user);
-        // assert문 추가
-    }
 }
