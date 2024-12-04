@@ -15,8 +15,7 @@ import sa.repository.WoowaPaymentRepository;
 
 import java.util.EnumMap;
 
-@EntityScan(basePackages = {"sa"})
-@SpringBootApplication(scanBasePackages = {"sa"})
+@SpringBootApplication
 public class SpringPaymentApplication {
 
     public static void main(String[] args) {

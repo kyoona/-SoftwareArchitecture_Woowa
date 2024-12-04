@@ -3,8 +3,6 @@ package sa.kafka;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import sa.domain.Payment;
-import sa.domain.PaymentMethod;
 import sa.domain.PaymentMethodType;
 
 @Getter

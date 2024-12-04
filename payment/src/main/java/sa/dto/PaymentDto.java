@@ -1,9 +1,7 @@
 package sa.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import sa.domain.Payment;
 import sa.domain.PaymentMethodType;
 import sa.domain.PaymentStatus;

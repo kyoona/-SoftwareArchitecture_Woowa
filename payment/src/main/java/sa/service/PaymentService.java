@@ -3,8 +3,14 @@ package sa.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sa.domain.*;
+import sa.domain.Payment;
+import sa.domain.PaymentMethod;
+import sa.domain.PaymentMethodType;
+import sa.domain.PaymentStatus;
 import sa.dto.PaymentDto;
+import sa.kafka.KafkaProducer;
+import sa.kafka.KafkaTopic;
+import sa.kafka.PaymentResponseMsg;
 import sa.repository.PaymentMethodRepository;
 import sa.repository.PaymentRepository;
 
@@ -19,22 +25,31 @@ public class PaymentService {
 
     private final EnumMap<PaymentMethodType, PaymentMethodRepository> paymentMethodRepositoryMap;
 
+    private final KafkaProducer kafkaProducer;
+
     @Transactional
-    public Long processPayment(PaymentDto paymentDto) {
+    public void processPayment(PaymentDto paymentDto) {
         if(paymentDto.getPaymentStatus() != PaymentStatus.ACCEPT)
             throw new RuntimeException("검증되지 않은 결제 정보");
 
         PaymentMethod paymentMethod = getPaymentMethod(paymentDto);
 
         int paid = paymentMethod.pay(paymentDto.getTotalPrice());
-        if (paymentDto.getTotalPrice() == paid)
-            paymentDto.setPaymentStatus(PaymentStatus.PAID);
+        boolean result = paymentDto.getTotalPrice() == paid;
 
-        return paymentRepository.save(PaymentDto.getPayment(paymentDto)).getId();
+        if (!result)
+            throw new RuntimeException("잔액 부족");
+
+        paymentDto.setPaymentStatus(PaymentStatus.PAID);
+        Payment payment = paymentRepository.save(PaymentDto.getPayment(paymentDto));
+
+        paymentDto.setPaymentId(payment.getId());
+
+        kafkaProducer.sendMessage(KafkaTopic.payment_response, new PaymentResponseMsg(paymentDto.getOrderId(), result));
     }
 
     @Transactional
-    public PaymentDto cancelPayment(PaymentDto paymentDto) {
+    public void cancelPayment(PaymentDto paymentDto) {
         Payment payment = paymentRepository.findById(paymentDto.getPaymentId()).orElseThrow();
 
         if(payment.getPaymentStatus() != PaymentStatus.PAID) {
@@ -50,7 +65,6 @@ public class PaymentService {
         paymentRepository.save(payment);
         paymentDto.setPaymentStatus(PaymentStatus.REFUND);
 
-        return paymentDto;
     }
 
     private PaymentMethod getPaymentMethod(PaymentDto paymentDto) {
