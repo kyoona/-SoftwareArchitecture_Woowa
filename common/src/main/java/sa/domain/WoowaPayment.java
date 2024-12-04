@@ -29,6 +29,9 @@ public class WoowaPayment implements PaymentMethod {
 
     @Override
     public int pay(int amount) {
+        if(balance < amount)
+            throw new RuntimeException("잔액 부족");
+
         balance -= amount;
         return amount;
     }

@@ -2,8 +2,9 @@ package sa.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sa.domain.PaymentMethod;
 import sa.domain.PaymentMethodType;
+import sa.domain.PaymentStatus;
+import sa.dto.PaymentDto;
 import sa.repository.PaymentMethodRepository;
 
 import java.util.EnumMap;
@@ -14,8 +15,15 @@ public class ValidatorService {
 
     private final EnumMap<PaymentMethodType, PaymentMethodRepository> repositoryMap;
 
-    public boolean validate(PaymentMethod paymentMethod) {
-        return repositoryMap.get(paymentMethod.getPaymentMethodType()).exists(paymentMethod);
+    public boolean validate(PaymentDto paymentDto) {
+        boolean result = (repositoryMap.get(paymentDto.getPaymentMethodType()).findByUserId(paymentDto.getUserId()) != null);
+
+        if (result)
+            paymentDto.setPaymentStatus(PaymentStatus.ACCEPT);
+        else
+            paymentDto.setPaymentStatus(PaymentStatus.DENY);
+
+        return result;
     }
 
 }

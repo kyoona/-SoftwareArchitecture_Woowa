@@ -3,12 +3,12 @@ package sa.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import sa.domain.Payment;
 import sa.domain.PaymentMethodType;
 import sa.domain.PaymentStatus;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 public class PaymentDto {
 
@@ -26,14 +26,15 @@ public class PaymentDto {
         this.totalPrice = totalPrice;
     }
 
-    public PaymentDto(Payment payment) {
-        this.paymentId = payment.getId();
-        this.userId = payment.getUserId();
-        this.paymentMethodType = payment.getPaymentMethodType();
-        this.totalPrice = payment.getTotalPrice();
-        this.paymentStatus = payment.getPaymentStatus();
+    public static Payment getPayment(PaymentDto paymentDto) {
+        return new Payment(
+                paymentDto.getUserId(),
+                paymentDto.getPaymentMethodType(),
+                paymentDto.getTotalPrice(),
+                paymentDto.getPaymentStatus());
     }
 
+    public void setPaymentId(Long paymentId) { this.paymentId = paymentId; }
     public void setPaymentStatus(PaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
