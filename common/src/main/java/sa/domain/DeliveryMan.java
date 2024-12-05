@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Table(name = "deliveryMen")
 @Entity
 public class DeliveryMan {
     @Column(name = "deliveryManId")

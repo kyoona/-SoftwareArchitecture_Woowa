@@ -31,24 +31,24 @@ public class DeliveryController {
 
     @DeleteMapping(path = "{deliveryId}")
     public void cancelDelivery(@PathVariable Long userId,
-                                       @PathVariable Long deliveryId) {
+                               @PathVariable Long deliveryId) {
 
-        deliveryService.cancelDelivery(deliveryId);
+        deliveryService.cancelDelivery(userId, deliveryId);
     }
 
     @GetMapping(path = "{deliveryId}")
     public DeliveryResDto getDelivery(@PathVariable Long userId,
                                       @PathVariable Long deliveryId) {
 
-        DeliveryResDto deliveryResDto = deliveryService.getDelivery(deliveryId);
+        DeliveryResDto deliveryResDto = deliveryService.getDelivery(userId, deliveryId);
 
         return deliveryResDto; // return delivery result
     }
 
     @GetMapping(path = "wait")
-    public List<DeliveryResDto> getDeliveries(@PathVariable Long userId) {
+    public List<DeliveryResDto> getWaitDeliveryList(@PathVariable Long userId) {
 
-        List<DeliveryResDto> deliveryResDtoList = deliveryService.getDeliveries();
+        List<DeliveryResDto> deliveryResDtoList = deliveryService.getWaitDeliveryList(userId);
 
         return deliveryResDtoList; // return delivery result
     }
@@ -56,21 +56,27 @@ public class DeliveryController {
     @PostMapping(path = "{deliveryId}/accept")
     public SimpleResDto acceptDelivery(@PathVariable Long userId,
                                        @PathVariable Long deliveryId) {
-        // accept delivery
-        return new SimpleResDto(1L);
+
+        deliveryService.acceptDelivery(userId, deliveryId);
+
+        return new SimpleResDto(deliveryId);
     }
 
     @PostMapping(path = "{deliveryId}/deny")
     public SimpleResDto denyDelivery(@PathVariable Long userId,
                                      @PathVariable Long deliveryId) {
-        // deny delivery
-        return new SimpleResDto(1L);
+
+        deliveryService.denyDelivery(userId, deliveryId);
+
+        return new SimpleResDto(deliveryId);
     }
 
     @PostMapping(path = "{deliveryId}/done")
     public SimpleResDto doneDelivery(@PathVariable Long userId,
                                      @PathVariable Long deliveryId) {
-        // done delivery
-        return new SimpleResDto(1L);
+
+        deliveryService.doneDelivery(userId, deliveryId);
+
+        return new SimpleResDto(deliveryId);
     }
 }
