@@ -29,7 +29,11 @@
 </td>
 <td>
 <div class="infoBox" id="failures">
+<<<<<<< HEAD
 <div class="counter">1</div>
+=======
+<div class="counter">0</div>
+>>>>>>> c24ccb7 (chore : gitignore 재적용)
 <p>failures</p>
 </div>
 </td>
@@ -41,7 +45,11 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
+<<<<<<< HEAD
 <div class="counter">0.605s</div>
+=======
+<div class="counter">0.417s</div>
+>>>>>>> c24ccb7 (chore : gitignore 재적용)
 <p>duration</p>
 </div>
 </td>
@@ -50,8 +58,13 @@
 </div>
 </td>
 <td>
+<<<<<<< HEAD
 <div class="infoBox failures" id="successRate">
 <div class="percent">0%</div>
+=======
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+>>>>>>> c24ccb7 (chore : gitignore 재적용)
 <p>successful</p>
 </div>
 </td>
@@ -61,6 +74,7 @@
 <div id="tabs">
 <ul class="tabLinks">
 <li>
+<<<<<<< HEAD
 <a href="#tab0">Failed tests</a>
 </li>
 <li>
@@ -177,6 +191,15 @@ Caused by: java.sql.SQLException: No database selected
 </div>
 </div>
 <div id="tab1" class="tab">
+=======
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+>>>>>>> c24ccb7 (chore : gitignore 재적용)
 <h2>Tests</h2>
 <table>
 <thead>
@@ -187,6 +210,7 @@ Caused by: java.sql.SQLException: No database selected
 </tr>
 </thead>
 <tr>
+<<<<<<< HEAD
 <td class="failures">addUser()</td>
 <td class="failures">0.605s</td>
 <td class="failures">failed</td>
@@ -198,6 +222,19 @@ Caused by: java.sql.SQLException: No database selected
 <span class="code">
 <pre>23:11:54.604 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [sa.service.UserServiceTest]: UserServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
 23:11:54.722 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration sa.SpringWoowaApplication for test class sa.service.UserServiceTest
+=======
+<td class="success">addUser()</td>
+<td class="success">0.417s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>03:02:21.667 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [sa.service.UserServiceTest]: UserServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+03:02:21.733 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration sa.SpringWoowaApplication for test class sa.service.UserServiceTest
+>>>>>>> c24ccb7 (chore : gitignore 재적용)
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -208,6 +245,7 @@ Caused by: java.sql.SQLException: No database selected
 
  :: Spring Boot ::                (v3.4.0)
 
+<<<<<<< HEAD
 2024-12-03T23:11:55.235+09:00  INFO 32336 --- [    Test worker] sa.service.UserServiceTest               : Starting UserServiceTest using Java 17.0.4.1 with PID 32336 (started by user in C:\Users\user\Desktop\UnifiedDeliveryService\project\SoftwareArchitecture_Woowa\woowa)
 2024-12-03T23:11:55.237+09:00  INFO 32336 --- [    Test worker] sa.service.UserServiceTest               : No active profile set, falling back to 1 default profile: &quot;default&quot;
 2024-12-03T23:11:55.997+09:00  INFO 32336 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
@@ -222,6 +260,22 @@ Caused by: java.sql.SQLException: No database selected
 2024-12-03T23:11:57.635+09:00  WARN 32336 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
 2024-12-03T23:11:57.638+09:00  WARN 32336 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
 2024-12-03T23:11:57.659+09:00  INFO 32336 --- [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+=======
+2024-11-29T03:02:21.985+09:00  INFO 88100 --- [    Test worker] sa.service.UserServiceTest               : Starting UserServiceTest using Java 17.0.3 with PID 88100 (started by kyn in /Users/kyn/Konkuk/소프트웨어아키텍처/project/SoftwareArchitecture_Woowa/woowa)
+2024-11-29T03:02:21.986+09:00  INFO 88100 --- [    Test worker] sa.service.UserServiceTest               : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2024-11-29T03:02:22.345+09:00  INFO 88100 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-29T03:02:22.377+09:00  INFO 88100 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 26 ms. Found 1 JPA repository interface.
+2024-11-29T03:02:22.604+09:00  INFO 88100 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-29T03:02:22.639+09:00  INFO 88100 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.2.Final
+2024-11-29T03:02:22.661+09:00  INFO 88100 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-11-29T03:02:22.834+09:00  INFO 88100 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-29T03:02:22.852+09:00  INFO 88100 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-11-29T03:02:23.040+09:00  INFO 88100 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@248b2b61
+2024-11-29T03:02:23.041+09:00  INFO 88100 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-11-29T03:02:23.077+09:00  WARN 88100 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-11-29T03:02:23.078+09:00  WARN 88100 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2024-11-29T03:02:23.090+09:00  INFO 88100 --- [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+>>>>>>> c24ccb7 (chore : gitignore 재적용)
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 8.0
@@ -229,6 +283,7 @@ Caused by: java.sql.SQLException: No database selected
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
+<<<<<<< HEAD
 2024-12-03T23:11:59.327+09:00  INFO 32336 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: 
     alter table menu 
@@ -3922,6 +3977,11 @@ Caused by: java.sql.SQLException: No database selected
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80) ~[hibernate-core-6.6.2.Final.jar:6.6.2.Final]
 	... 133 common frames omitted
 
+=======
+2024-11-29T03:02:23.575+09:00  INFO 88100 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    drop table if exists users
+>>>>>>> c24ccb7 (chore : gitignore 재적용)
 Hibernate: 
     create table users (
         x float(53),
@@ -3932,6 +3992,7 @@ Hibernate:
         user_role enum ('CUSTOMER','MANAGER','STORE'),
         primary key (user_id)
     ) engine=InnoDB
+<<<<<<< HEAD
 2024-12-03T23:11:59.598+09:00  WARN 32336 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL &quot;
     create table users (
         x float(53),
@@ -5284,6 +5345,11 @@ Caused by: java.sql.SQLException: No database selected
 2024-12-03T23:12:01.794+09:00  INFO 32336 --- [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-woowa-1, groupId=woowa] Node -1 disconnected.
 2024-12-03T23:12:01.794+09:00  WARN 32336 --- [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-woowa-1, groupId=woowa] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
 2024-12-03T23:12:01.794+09:00  WARN 32336 --- [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-woowa-1, groupId=woowa] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+=======
+2024-11-29T03:02:23.623+09:00  INFO 88100 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-29T03:02:23.854+09:00  WARN 88100 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-29T03:02:24.116+09:00  INFO 88100 --- [    Test worker] sa.service.UserServiceTest               : Started UserServiceTest in 2.293 seconds (process running for 2.906)
+>>>>>>> c24ccb7 (chore : gitignore 재적용)
 Hibernate: 
     insert 
     into
@@ -5291,6 +5357,7 @@ Hibernate:
         (location_name, x, y, user_name, user_role) 
     values
         (?, ?, ?, ?, ?)
+<<<<<<< HEAD
 2024-12-03T23:12:01.920+09:00  INFO 32336 --- [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-woowa-1, groupId=woowa] Node -1 disconnected.
 2024-12-03T23:12:01.921+09:00  WARN 32336 --- [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-woowa-1, groupId=woowa] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
 2024-12-03T23:12:01.923+09:00  WARN 32336 --- [ntainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-woowa-1, groupId=woowa] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
@@ -5299,6 +5366,8 @@ Hibernate:
 2024-12-03T23:12:01.951+09:00  INFO 32336 --- [ntainer#1-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-woowa-2, groupId=woowa] Node -1 disconnected.
 2024-12-03T23:12:01.952+09:00  WARN 32336 --- [ntainer#1-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-woowa-2, groupId=woowa] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
 2024-12-03T23:12:01.952+09:00  WARN 32336 --- [ntainer#1-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-woowa-2, groupId=woowa] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+=======
+>>>>>>> c24ccb7 (chore : gitignore 재적용)
 </pre>
 </span>
 </div>
@@ -5310,7 +5379,11 @@ Hibernate:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
+<<<<<<< HEAD
 <a href="http://www.gradle.org">Gradle 8.11.1</a> at 2024. 12. 3. 오후 11:12:02</p>
+=======
+<a href="http://www.gradle.org">Gradle 8.11.1</a> at Nov 29, 2024, 3:02:24 AM</p>
+>>>>>>> c24ccb7 (chore : gitignore 재적용)
 </div>
 </div>
 </body>

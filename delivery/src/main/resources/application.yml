@@ -1,14 +1,5 @@
 spring:
   datasource:
-<<<<<<< HEAD
-    url: jdbc:mysql://localhost:3306/woowa?serverTimezone=Asia/Seoul
-    username: woowa
-    password: pass0405
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-=======
     url: ${MYSQL_URL}?serverTimezone=Asia/Seoul
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
@@ -16,15 +7,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
->>>>>>> c24ccb7 (chore : gitignore 재적용)
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
         default_batch_fetch_size: 100
-<<<<<<< HEAD
-  #        show_sql: true   # 하이버네이트 기본 SQL 출력 옵션
-  #        format_sql: true # 하이버네이트 기본 SQL 포맷팅 옵션
-=======
 #        show_sql: true   # 하이버네이트 기본 SQL 출력 옵션
 #        format_sql: true # 하이버네이트 기본 SQL 포맷팅 옵션
 
@@ -33,4 +19,3 @@ logging:
     root: INFO
   file:
     name: /spring-log/application.log
->>>>>>> c24ccb7 (chore : gitignore 재적용)

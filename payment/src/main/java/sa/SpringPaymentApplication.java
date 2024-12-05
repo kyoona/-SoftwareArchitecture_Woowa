@@ -1,6 +1,7 @@
 package sa;
 
 
+<<<<<<< HEAD
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.boot.SpringApplication;
@@ -16,11 +17,20 @@ import sa.repository.WoowaPaymentRepository;
 import java.util.EnumMap;
 
 @SpringBootApplication
+=======
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+@EntityScan(basePackages = {"sa"})
+@SpringBootApplication(scanBasePackages = {"sa"})
+>>>>>>> c24ccb7 (chore : gitignore 재적용)
 public class SpringPaymentApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringPaymentApplication.class);
     }
+<<<<<<< HEAD
 
     @Bean
     public JPAQueryFactory jpaQueryFactory(EntityManager em){
@@ -42,4 +52,6 @@ public class SpringPaymentApplication {
 
         return repositoryMap;
     }
+=======
+>>>>>>> c24ccb7 (chore : gitignore 재적용)
 }

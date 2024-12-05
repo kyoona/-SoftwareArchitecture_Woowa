@@ -1,10 +1,6 @@
 spring:
   datasource:
-<<<<<<< HEAD
-    url: jdbc:mysql://localhost:3306/?user=woowa
-=======
     url: jdbc:mysql://localhost:3306/woowa?serverTimezone=Asia/Seoul
->>>>>>> c24ccb7 (chore : gitignore 재적용)
     username: woowa
     password: pass0405
     driver-class-name: com.mysql.cj.jdbc.Driver
