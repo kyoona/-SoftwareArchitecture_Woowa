@@ -1,7 +1,0 @@
-rootProject.name = 'unified-woowa'
-include 'woowa'
-include 'delivery'
-include 'payment'
-include 'gateway'
-include 'common'
-
