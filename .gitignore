@@ -23,5 +23,21 @@
 hs_err_pid*
 replay_pid*
 
+# Build directories
 /build/
-/test/resources/**
+/out/
+
+# Gradle files
+.gradle/
+
+# Test resources
+/test/resources/
+
+# IntelliJ IDEA files
+/.idea/
+/*.iml
+
+# IntelliJ project-specific files
+*.iws
+*.ipr
+*.iml
