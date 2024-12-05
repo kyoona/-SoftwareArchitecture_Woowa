@@ -8,6 +8,9 @@ import sa.dto.DeliveryAddDto;
 import sa.dto.DeliveryResDto;
 import sa.repository.DeliveryRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
@@ -20,8 +23,23 @@ public class DeliveryService {
         return 1L; // return deliveryId
     }
 
+    @Transactional
+    public void cancelDelivery(Long deliveryId) {
+        deliveryRepository.deleteById(deliveryId);
+    }
+
+    @Transactional
     public DeliveryResDto getDelivery(Long deliveryId) {
         Delivery delivery = deliveryRepository.findById(deliveryId).orElseThrow();
+
         return new DeliveryResDto(delivery);
+    }
+
+    @Transactional
+    public List<DeliveryResDto> getDeliveries() {
+        List<DeliveryResDto> deliveryResDtoList = new ArrayList<>();
+        deliveryRepository.findAll().forEach(delivery -> deliveryResDtoList.add(new DeliveryResDto(delivery)));
+
+        return deliveryResDtoList;
     }
 }

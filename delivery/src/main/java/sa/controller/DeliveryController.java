@@ -23,29 +23,33 @@ public class DeliveryController {
     @PostMapping(path = "reqeuest")
     public SimpleResDto requestDelivery(@PathVariable Long userId,
                                         @RequestBody DeliveryAddDto deliveryAddDto) {
-        // request delivery
-        return new SimpleResDto(1L); // return deliveryId
+
+        Long deliveryId = deliveryService.requestDelivery(userId, deliveryAddDto);
+
+        return new SimpleResDto(deliveryId);
     }
 
     @DeleteMapping(path = "{deliveryId}")
-    public SimpleResDto cancelDelivery(@PathVariable Long userId,
+    public void cancelDelivery(@PathVariable Long userId,
                                        @PathVariable Long deliveryId) {
-        // delete delivery
-        return new SimpleResDto(1L);
+
+        deliveryService.cancelDelivery(deliveryId);
     }
 
     @GetMapping(path = "{deliveryId}")
     public DeliveryResDto getDelivery(@PathVariable Long userId,
                                       @PathVariable Long deliveryId) {
-        // get delivery
+
         DeliveryResDto deliveryResDto = deliveryService.getDelivery(deliveryId);
+
         return deliveryResDto; // return delivery result
     }
 
-    @GetMapping(path = "")
+    @GetMapping(path = "wait")
     public List<DeliveryResDto> getDeliveries(@PathVariable Long userId) {
-        List<DeliveryResDto> deliveryResDtoList = new ArrayList<DeliveryResDto>();
-        // get deliveries
+
+        List<DeliveryResDto> deliveryResDtoList = deliveryService.getDeliveries();
+
         return deliveryResDtoList; // return delivery result
     }
 
