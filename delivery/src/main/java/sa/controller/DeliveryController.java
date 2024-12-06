@@ -2,15 +2,11 @@ package sa.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import sa.domain.Delivery;
-import sa.domain.Order;
-import sa.domain.Store;
 import sa.dto.DeliveryAddDto;
 import sa.dto.DeliveryResDto;
 import sa.dto.SimpleResDto;
 import sa.service.DeliveryService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -53,29 +49,32 @@ public class DeliveryController {
         return deliveryResDtoList; // return delivery result
     }
 
-    @PostMapping(path = "{deliveryId}/accept")
+    @PostMapping(path = "{deliveryId}/deliverymen/{deliveryManId}/accept")
     public SimpleResDto acceptDelivery(@PathVariable Long userId,
-                                       @PathVariable Long deliveryId) {
+                                       @PathVariable Long deliveryId,
+                                       @PathVariable Long deliveryManId) {
 
-        deliveryService.acceptDelivery(userId, deliveryId);
+        deliveryService.acceptDelivery(userId, deliveryId, deliveryManId);
 
         return new SimpleResDto(deliveryId);
     }
 
-    @PostMapping(path = "{deliveryId}/deny")
+    @PostMapping(path = "{deliveryId}/deliverymen/{deliveryManId}/deny")
     public SimpleResDto denyDelivery(@PathVariable Long userId,
-                                     @PathVariable Long deliveryId) {
+                                     @PathVariable Long deliveryId,
+                                     @PathVariable Long deliveryManId) {
 
-        deliveryService.denyDelivery(userId, deliveryId);
+        deliveryService.denyDelivery(userId, deliveryId, deliveryManId);
 
         return new SimpleResDto(deliveryId);
     }
 
-    @PostMapping(path = "{deliveryId}/done")
+    @PostMapping(path = "{deliveryId}/deliverymen/{deliveryManId}/done")
     public SimpleResDto doneDelivery(@PathVariable Long userId,
-                                     @PathVariable Long deliveryId) {
+                                     @PathVariable Long deliveryId,
+                                     @PathVariable Long deliveryManId) {
 
-        deliveryService.doneDelivery(userId, deliveryId);
+        deliveryService.doneDelivery(userId, deliveryId, deliveryManId);
 
         return new SimpleResDto(deliveryId);
     }

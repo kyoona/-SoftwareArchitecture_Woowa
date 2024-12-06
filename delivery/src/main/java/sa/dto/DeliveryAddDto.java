@@ -14,6 +14,6 @@ import sa.domain.User;
 public class DeliveryAddDto {
     private User user;
     private Store store;
-    private Location location;
+    private Long orderId;
     private int deliveryPrice;
 }

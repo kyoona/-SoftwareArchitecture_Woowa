@@ -10,13 +10,13 @@ public class DeliveryResDto {
     private Long deliveryId;
     private User user;
     private Store store;
-    private Location location;
+    private Long orderId;
     private int deliveryPrice;
     public DeliveryResDto(Delivery delivery) {
         this.deliveryId = delivery.getId();
         this.user = delivery.getUser();
         this.store = delivery.getStore();
-        this.location = delivery.getLocation();
+        this.orderId = delivery.getOrderId();
         this.deliveryPrice = delivery.getDeliveryPrice();
     }
 }

@@ -25,18 +25,23 @@ public class Delivery {
     @OneToOne(fetch = FetchType.LAZY)
     private Store store;
 
-    private Location location;
+    @Setter
+    private int deliveryManPriorIdx;
+    @Setter
     private int deliveryPrice;
+
+    private Long orderId;
 
     @Setter
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus = DeliveryStatus.WAIT;
 
-    public static Delivery create(User user, Store store, Location location, int deliveryPrice){
+    public static Delivery create(User user, Store store, Long orderId, int deliveryPrice){
         Delivery delivery = new Delivery();
         delivery.user = user;
         delivery.store = store;
-        delivery.location = location;
+        delivery.deliveryManPriorIdx = 0;
+        delivery.orderId = orderId;
         delivery.deliveryPrice = deliveryPrice;
 
         if (deliveryPrice <= 0) {

@@ -10,6 +10,7 @@ import sa.event.DeliveryEventPublisher;
 import sa.kafka.DeliveryStatusMsg;
 import sa.kafka.KafkaProducer;
 import sa.kafka.KafkaTopic;
+import sa.repository.DeliveryManRepository;
 import sa.repository.DeliveryRepository;
 import sa.repository.StoreRepository;
 import sa.repository.UserRepository;
@@ -23,6 +24,7 @@ import java.util.List;
 public class DeliveryService {
 
     private final DeliveryRepository deliveryRepository;
+    private final DeliveryManRepository deliveryManRepository;
     private final UserRepository userRepository;
     private final StoreRepository storeRepository;
 
@@ -35,16 +37,12 @@ public class DeliveryService {
         User user = userRepository.findById(userId).orElseThrow();
         Store store = storeRepository.findById(deliveryAddDto.getStore().getId()).orElseThrow();
 
-        Delivery delivery = Delivery.create(user, store, deliveryAddDto.getLocation(), deliveryAddDto.getDeliveryPrice());
+        Delivery delivery = Delivery.create(user, store, deliveryAddDto.getOrderId(), deliveryAddDto.getDeliveryPrice());
         deliveryRepository.save(delivery);
 
-        return delivery.getId();
-    }
+        sendDeliveryRequest(delivery.getId());
 
-    @Transactional
-    public void sendDeliveryRequest(Long deliveryId) {
-        deliveryScheduler.cancel(deliveryId);
-        deliveryScheduler.reserve(deliveryId, () -> deliveryEventPublisher.publishDeliveryEvent(deliveryId));
+        return delivery.getId();
     }
 
     @Transactional
@@ -80,31 +78,61 @@ public class DeliveryService {
     }
 
     @Transactional
-    public void acceptDelivery(Long userId, Long deliveryId) {
+    public void acceptDelivery(Long userId, Long deliveryId, Long deliveryManId) {
         User user = userRepository.findById(userId).orElseThrow();
-        checkStore(user);
+        checkDeliveryMan(user);
         Delivery delivery = deliveryRepository.findById(deliveryId).orElseThrow();
+        checkValidDeliveryMan(delivery, deliveryManId);
+
+        if (delivery.getDeliveryStatus() != DeliveryStatus.WAIT) {
+            throw new RuntimeException();
+        }
 
         delivery.setDeliveryStatus(DeliveryStatus.ACCEPT);
+        deliveryScheduler.cancel(deliveryId);
 
-        kafkaProducer.sendMessage(KafkaTopic.deliver_status, new DeliveryStatusMsg()); // todo: Fill Delivery Status Msg Format
-    }
-
-    public void denyDelivery(Long userId, Long deliveryId) {
-        User user = userRepository.findById(userId).orElseThrow();
-        checkStore(user);
-        Delivery delivery = deliveryRepository.findById(deliveryId).orElseThrow();
-
-        // todo: 해당 함수 이후에는 다음 기사에게 요청 진행해야 함.
+        kafkaProducer.sendMessage(KafkaTopic.deliver_status, new DeliveryStatusMsg(delivery.getOrderId(), sa.kafka.DeliveryStatus.START));
     }
 
     @Transactional
-    public void doneDelivery(Long userId, Long deliveryId) {
+    public void denyDelivery(Long userId, Long deliveryId, Long deliveryManId) {
         User user = userRepository.findById(userId).orElseThrow();
-        checkStore(user);
+        checkDeliveryMan(user);
         Delivery delivery = deliveryRepository.findById(deliveryId).orElseThrow();
+        checkValidDeliveryMan(delivery, deliveryManId);
+
+        if (delivery.getDeliveryManPriorIdx() + 1 < deliveryManRepository.findAll().size()) {
+            delivery.setDeliveryManPriorIdx(delivery.getDeliveryManPriorIdx() + 1);
+        }
+        else {
+            delivery.setDeliveryManPriorIdx(0);
+            delivery.setDeliveryPrice(delivery.getDeliveryPrice() + 100);
+        }
+
+        sendDeliveryRequest(deliveryId);
+    }
+
+    @Transactional
+    public void doneDelivery(Long userId, Long deliveryId, Long deliveryManId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        checkDeliveryMan(user);
+        Delivery delivery = deliveryRepository.findById(deliveryId).orElseThrow();
+        checkValidDeliveryMan(delivery, deliveryManId);
 
         delivery.setDeliveryStatus(DeliveryStatus.DONE);
+        deliveryScheduler.cancel(deliveryId);
+
+        kafkaProducer.sendMessage(KafkaTopic.deliver_status, new DeliveryStatusMsg(delivery.getOrderId(), sa.kafka.DeliveryStatus.FINISH));
+    }
+
+    @Transactional
+    public void checkDeliveryAcceptAndCancel(Long deliveryId) {
+        Delivery delivery = deliveryRepository.findById(deliveryId).orElseThrow();
+        if(delivery.getDeliveryStatus().equals(DeliveryStatus.WAIT)) {
+            delivery.setDeliveryManPriorIdx(
+                    (delivery.getDeliveryManPriorIdx() + 1) % deliveryManRepository.findAll().size()
+            );
+        }
     }
 
     private void checkStore(User user){
@@ -113,11 +141,40 @@ public class DeliveryService {
         }
     }
 
-    @Transactional
-    public void checkDeliveryAcceptAndCancel(Long deliveryId) {
-        Delivery delivery = deliveryRepository.findById(deliveryId).orElseThrow();
-        if(delivery.getDeliveryStatus().equals(DeliveryStatus.WAIT)) {
-            // todo: 1분 안에 요청을 수락 / 거절 하지 않은 경우 다음 기사에게 요청 진행해야 함.
+    private void checkDeliveryMan(User user){
+        if(user.getUserRole() != UserRole.DELIVERYMAN){
+            throw new RuntimeException();
         }
     }
+
+    private void checkValidDeliveryMan(Delivery delivery, Long deliveryManId) {
+        DeliveryMan deliveryMan = deliveryManRepository.findAll()
+                .stream()
+                .sorted((a, b) -> {
+                    Double distanceA = getDistance(a.getLocation(), delivery.getStore().getLocation());
+                    Double distanceB = getDistance(b.getLocation(), delivery.getStore().getLocation());
+                    if (Math.abs(distanceA - distanceB) < 1e-9) {
+                        return a.getId().compareTo(b.getId());
+                    }
+                    else {
+                        return distanceA.compareTo(distanceB);
+                    }
+                })
+                .toList()
+                .get(delivery.getDeliveryManPriorIdx());
+
+        if (!deliveryMan.getId().equals(deliveryManId)) {
+            throw new RuntimeException();
+        }
+    }
+
+    public void sendDeliveryRequest(Long deliveryId) {
+        deliveryScheduler.cancel(deliveryId);
+        deliveryScheduler.reserve(deliveryId, () -> deliveryEventPublisher.publishDeliveryEvent(deliveryId));
+    }
+
+    private Double getDistance(Location loc1, Location loc2) {
+        return Math.sqrt(Math.pow(loc1.getX() - loc2.getX(), 2) + Math.pow(loc1.getY() - loc2.getY(), 2));
+    }
+
 }
