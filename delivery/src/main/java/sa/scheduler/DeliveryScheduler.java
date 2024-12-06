@@ -15,8 +15,10 @@ public class DeliveryScheduler {
     private final TaskScheduler scheduler;
     private final ConcurrentHashMap<Long, ScheduledFuture> deliveryTask = new ConcurrentHashMap<>();
 
-    public void reserve(Long deliveryId) {
-
+    public void reserve(Long deliveryId, Runnable runnable){
+        Duration duration = getDurationFor1Min();
+        ScheduledFuture<?> future = scheduler.scheduleWithFixedDelay(runnable, duration);
+        deliveryTask.put(deliveryId, future);
     }
 
     public void cancel(Long deliveryId) {
@@ -27,7 +29,7 @@ public class DeliveryScheduler {
         }
     }
 
-    public Duration getDuration (LocalDateTime time) {
-        return Duration.between(LocalDateTime.now(), time);
+    private Duration getDurationFor1Min(){
+        return Duration.between(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1));
     }
 }

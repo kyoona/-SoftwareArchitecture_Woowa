@@ -1,5 +1,5 @@
 package sa.domain;
 
 public enum DeliveryStatus {
-    WAIT, ACCEPT, DENY, DONE, CANCEL
+    WAIT, ACCEPT, DONE, CANCEL
 }
