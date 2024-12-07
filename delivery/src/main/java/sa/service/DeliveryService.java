@@ -35,9 +35,9 @@ public class DeliveryService {
     @Transactional
     public Long requestDelivery(Long userId, DeliveryAddDto deliveryAddDto) {
         User user = userRepository.findById(userId).orElseThrow();
-        Store store = storeRepository.findById(deliveryAddDto.getStore().getId()).orElseThrow();
+        checkStore(user);
 
-        Delivery delivery = Delivery.create(user, store, deliveryAddDto.getOrderId(), deliveryAddDto.getDeliveryPrice());
+        Delivery delivery = Delivery.create(deliveryAddDto.getUser(), deliveryAddDto.getStore(), deliveryAddDto.getOrderId(), deliveryAddDto.getDeliveryPrice());
         deliveryRepository.save(delivery);
 
         sendDeliveryRequest(delivery.getId());
