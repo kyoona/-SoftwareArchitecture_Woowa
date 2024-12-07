@@ -15,6 +15,7 @@ import sa.dto.UserAddDto;
 import sa.repository.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @Transactional
@@ -24,13 +25,16 @@ public class StoreServiceTest {
     @Autowired
     private UserService userService;
 
-    private Long userId;
+    private Long userId, managerId;
 
     @BeforeEach
     public void setUp() {
         // given
         UserAddDto userAddDto = new UserAddDto("가게1", new Location("loc1", 1.1, 1.1), UserRole.STORE);
         userId = userService.addUser(userAddDto);
+
+        UserAddDto managerAddDto = new UserAddDto("매니저1", new Location("loc2", 10.1, -1.1), UserRole.MANAGER);
+        managerId = userService.addUser(managerAddDto);
     }
     @Test
     public void requestStore_validRequest() {
@@ -42,5 +46,60 @@ public class StoreServiceTest {
 
         // then
         assertThat(requestId).isNotNull();
+    }
+
+    @Test
+    public void requestStore_invalidRequest() {
+        // given
+        StoreRequestDto storeRequestDto = new StoreRequestDto("가게1", new Location("loc1", 1.1, 1.1), 1000, 12000);
+
+        assertThatThrownBy(() -> storeService.requestStore(managerId, storeRequestDto))
+                .isInstanceOf(RuntimeException.class);
+    }
+
+    @Test
+    public void acceptStore_validRequest() {
+        // given
+        StoreRequestDto storeRequestDto = new StoreRequestDto("가게1", new Location("loc1", 1.1, 1.1), 1000, 12000);
+        Long requestId = storeService.requestStore(userId, storeRequestDto);
+
+        // when
+        Long storeId = storeService.acceptStore(managerId, requestId);
+
+        // then
+        assertThat(storeId).isNotNull();
+    }
+
+    @Test
+    public void acceptStore_invalidRequest() {
+        // given
+        StoreRequestDto storeRequestDto = new StoreRequestDto("가게1", new Location("loc1", 1.1, 1.1), 1000, 12000);
+        Long requestId = storeService.requestStore(userId, storeRequestDto);
+
+        assertThatThrownBy(() -> storeService.acceptStore(userId, requestId))
+                .isInstanceOf(RuntimeException.class);
+    }
+
+    @Test
+    public void denyStore_validRequest() {
+        // given
+        StoreRequestDto storeRequestDto = new StoreRequestDto("가게1", new Location("loc1", 1.1, 1.1), 1000, 12000);
+        Long requestId = storeService.requestStore(userId, storeRequestDto);
+
+        // when
+        Long result = storeService.denyStore(managerId, requestId);
+
+        // then
+        assertThat(result).isEqualTo(requestId);
+    }
+
+    @Test
+    public void denyStore_invalidRequest() {
+        // given
+        StoreRequestDto storeRequestDto = new StoreRequestDto("가게1", new Location("loc1", 1.1, 1.1), 1000, 12000);
+        Long requestId = storeService.requestStore(userId, storeRequestDto);
+
+        assertThatThrownBy(() -> storeService.denyStore(userId, requestId))
+                .isInstanceOf(RuntimeException.class);
     }
 }
