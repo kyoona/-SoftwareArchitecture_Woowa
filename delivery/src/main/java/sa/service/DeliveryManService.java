@@ -22,10 +22,10 @@ public class DeliveryManService {
         User user = userRepository.findById(userId).orElseThrow();
         checkDeliveryMan(user);
 
-        User deliveryMan = User.create(deliveryManRequestDto.getDeliveryManName(), deliveryManRequestDto.getLocation(), UserRole.DELIVERYMAN);
-        userRepository.save(deliveryMan);
+        DeliveryManRequestInfo deliveryManRequestInfo = DeliveryManRequestInfo.create(deliveryManRequestDto.getDeliveryManName(), deliveryManRequestDto.getLocation());
+        deliveryManRequestInfoRepository.save(deliveryManRequestInfo);
 
-        return deliveryMan.getId();
+        return deliveryManRequestInfo.getId();
     }
 
     @Transactional
