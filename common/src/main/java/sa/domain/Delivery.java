@@ -18,11 +18,11 @@ public class Delivery {
     private Long id;
 
     @JoinColumn(name = "userId")
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     @JoinColumn(name = "storeId")
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Store store;
 
     @Setter
