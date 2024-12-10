@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sa.domain.Payment;
-import sa.domain.PaymentStatus;
+import sa.domain.AccountTransfer;
+import sa.domain.PaymentMethod;
 import sa.dto.PaymentDto;
 import sa.service.PaymentService;
 import sa.service.ValidatorService;
@@ -39,5 +39,10 @@ public class PaymentController {
         validatorService.validate(paymentDto);
 
         return paymentDto;
+    }
+
+    @PostMapping("/save/accountTransfer")
+    public void saveAccountTransfer(@RequestBody AccountTransfer accountTransfer) {
+        paymentService.savePaymentMethod(accountTransfer);
     }
 }
