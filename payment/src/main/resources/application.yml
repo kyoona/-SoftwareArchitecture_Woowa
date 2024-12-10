@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/woowa?serverTimezone=Asia/Seoul
-    username: woowa
-    password: pass0405
+    url: ${MYSQL_URL}?serverTimezone=Asia/Seoul
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
@@ -14,7 +14,7 @@ spring:
   #        show_sql: true   # 하이버네이트 기본 SQL 출력 옵션
   #        format_sql: true # 하이버네이트 기본 SQL 포맷팅 옵션
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_SERVER_URL}
     consumer:
       auto-offset-reset: latest
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -29,3 +29,9 @@ spring:
       buffer-memory: 1048576
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+logging:
+  level:
+    root: INFO
+  file:
+    name: /spring-log/application.log

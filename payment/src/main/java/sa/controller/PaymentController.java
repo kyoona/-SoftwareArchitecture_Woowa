@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sa.domain.AccountTransfer;
-import sa.domain.PaymentMethod;
+import sa.domain.CreditCard;
+import sa.domain.WoowaPayment;
 import sa.dto.PaymentDto;
 import sa.service.PaymentService;
 import sa.service.ValidatorService;
@@ -41,8 +42,18 @@ public class PaymentController {
         return paymentDto;
     }
 
-    @PostMapping("/save/accountTransfer")
+    @PostMapping("/save/account-transfer")
     public void saveAccountTransfer(@RequestBody AccountTransfer accountTransfer) {
         paymentService.savePaymentMethod(accountTransfer);
+    }
+
+    @PostMapping("/save/credit-card")
+    public void saveAccountTransfer(@RequestBody CreditCard creditCard) {
+        paymentService.savePaymentMethod(creditCard);
+    }
+
+    @PostMapping("/save/woowa-payment")
+    public void saveAccountTransfer(@RequestBody WoowaPayment woowaPayment) {
+        paymentService.savePaymentMethod(woowaPayment);
     }
 }
