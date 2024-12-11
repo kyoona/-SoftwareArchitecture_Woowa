@@ -25,25 +25,9 @@ public class AccountTransferRepository implements PaymentMethodRepository<Accoun
     }
 
     @Override
-    public boolean exists(AccountTransfer paymentMethod) {
-         return query.selectDistinct(accountTransfer)
-                 .where(accountTransfer.eq(paymentMethod))
-                 .fetchOne() != null;
-    }
-
-    @Override
     public AccountTransfer findByUserId(Long userId) {
         return query.selectFrom(accountTransfer)
                 .where(QAccountTransfer.accountTransfer.userId.eq(userId))
                 .fetchOne();
-    }
-
-    @Override
-    public AccountTransfer delete(AccountTransfer paymentMethod) {
-        query.delete(accountTransfer)
-                .where(accountTransfer.id.eq(paymentMethod.getId()))
-                .execute();
-
-        return paymentMethod;
     }
 }

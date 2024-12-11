@@ -67,6 +67,11 @@ public class PaymentService {
 
     }
 
+    @Transactional
+    public void savePaymentMethod(PaymentMethod paymentMethod) {
+        paymentMethodRepositoryMap.get(paymentMethod.getPaymentMethodType()).save(paymentMethod);
+    }
+
     private PaymentMethod getPaymentMethod(PaymentDto paymentDto) {
         PaymentMethodRepository paymentMethodRepository = paymentMethodRepositoryMap.get(paymentDto.getPaymentMethodType());
         return (PaymentMethod) paymentMethodRepository.findByUserId(paymentDto.getUserId());

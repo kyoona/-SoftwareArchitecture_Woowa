@@ -24,25 +24,10 @@ public class WoowaPaymentRepository implements PaymentMethodRepository<WoowaPaym
     }
 
     @Override
-    public boolean exists(WoowaPayment paymentMethod) {
-        return query.selectDistinct(woowaPayment)
-                .where(woowaPayment.eq(paymentMethod))
-                .fetchOne() != null;
-    }
-
-    @Override
     public WoowaPayment findByUserId(Long userId) {
         return query.selectFrom(woowaPayment)
                 .where(woowaPayment.userId.eq(userId))
                 .fetchOne();
     }
 
-    @Override
-    public WoowaPayment delete(WoowaPayment paymentMethod) {
-        query.delete(woowaPayment)
-                .where(woowaPayment.id.eq(paymentMethod.getId()))
-                .execute();
-
-        return paymentMethod;
-    }
 }

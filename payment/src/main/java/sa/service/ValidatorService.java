@@ -17,8 +17,6 @@ public class ValidatorService {
 
     public boolean validate(PaymentDto paymentDto) {
         boolean result = (repositoryMap.get(paymentDto.getPaymentMethodType()).findByUserId(paymentDto.getUserId()) != null);
-        System.out.println("paymentDto.getPaymentMethodType() = " + paymentDto.getPaymentMethodType());
-        System.out.println("repositoryMap.get(paymentDto.getPaymentMethodType()).findByUserId(paymentDto.getUserId()) = " + repositoryMap.get(paymentDto.getPaymentMethodType()).findByUserId(paymentDto.getUserId()));
         if (result)
             paymentDto.setPaymentStatus(PaymentStatus.ACCEPT);
         else
