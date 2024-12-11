@@ -169,6 +169,9 @@ public class DeliveryService {
     }
 
     public void sendDeliveryRequest(Long deliveryId) {
+        if (!deliveryScheduler.isReserved(deliveryId)) {
+            return;
+        }
         deliveryScheduler.cancel(deliveryId);
         deliveryScheduler.reserve(deliveryId, () -> deliveryEventPublisher.publishDeliveryEvent(deliveryId));
     }

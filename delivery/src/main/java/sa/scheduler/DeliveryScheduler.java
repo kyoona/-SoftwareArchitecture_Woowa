@@ -29,6 +29,10 @@ public class DeliveryScheduler {
         }
     }
 
+    public boolean isReserved(Long deliveryId){
+        return deliveryTask.containsKey(deliveryId);
+    }
+
     private Duration getDurationFor1Min(){
         return Duration.between(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1));
     }

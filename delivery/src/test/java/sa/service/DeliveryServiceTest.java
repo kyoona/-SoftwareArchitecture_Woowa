@@ -1,14 +1,9 @@
 package sa.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sa.domain.*;
 import sa.dto.*;
@@ -76,8 +71,11 @@ public class DeliveryServiceTest {
     @Test
     public void requestDelivery_validRequest() {
         // given
-        User user = userRepository.findById(customerId1).orElseThrow();
-        Store store = storeRepository.findById(getStoreId).orElseThrow();
+        User user_ = userRepository.findById(customerId1).orElseThrow();
+        User store_ = userRepository.findById(storeId).orElseThrow();
+
+        UserInfo user = new UserInfo(user_.getUserName(), user_.getLocation(), user_.getUserRole());
+        UserInfo store = new UserInfo(store_.getUserName(), store_.getLocation(), store_.getUserRole());
 
         DeliveryAddDto deliveryAddDto = new DeliveryAddDto(user, store, 1L, 1000);
 
@@ -94,8 +92,11 @@ public class DeliveryServiceTest {
     @Test
     public void cancelDelivery_validRequest() {
         // given
-        User user = userRepository.findById(customerId1).orElseThrow();
-        Store store = storeRepository.findById(getStoreId).orElseThrow();
+        User user_ = userRepository.findById(customerId1).orElseThrow();
+        User store_ = userRepository.findById(storeId).orElseThrow();
+
+        UserInfo user = new UserInfo(user_.getUserName(), user_.getLocation(), user_.getUserRole());
+        UserInfo store = new UserInfo(store_.getUserName(), store_.getLocation(), store_.getUserRole());
 
         DeliveryAddDto deliveryAddDto = new DeliveryAddDto(user, store, 1L, 1000);
         Long deliveryId = deliveryService.requestDelivery(storeId, deliveryAddDto);
@@ -112,8 +113,11 @@ public class DeliveryServiceTest {
     @Test
     public void getDelivery_validRequest() {
         // given
-        User user = userRepository.findById(customerId1).orElseThrow();
-        Store store = storeRepository.findById(getStoreId).orElseThrow();
+        User user_ = userRepository.findById(customerId1).orElseThrow();
+        User store_ = userRepository.findById(storeId).orElseThrow();
+
+        UserInfo user = new UserInfo(user_.getUserName(), user_.getLocation(), user_.getUserRole());
+        UserInfo store = new UserInfo(store_.getUserName(), store_.getLocation(), store_.getUserRole());
 
         DeliveryAddDto deliveryAddDto = new DeliveryAddDto(user, store, 1L, 1000);
         Long deliveryId = deliveryService.requestDelivery(storeId, deliveryAddDto);
@@ -128,9 +132,13 @@ public class DeliveryServiceTest {
     @Test
     public void getWaitDeliveryList_validRequest() {
         // given
-        User user1 = userRepository.findById(customerId1).orElseThrow();
-        User user2 = userRepository.findById(customerId2).orElseThrow();
-        Store store = storeRepository.findById(getStoreId).orElseThrow();
+        User user1_ = userRepository.findById(customerId1).orElseThrow();
+        User user2_ = userRepository.findById(customerId2).orElseThrow();
+        User store_ = userRepository.findById(storeId).orElseThrow();
+
+        UserInfo user1 = new UserInfo(user1_.getUserName(), user1_.getLocation(), user1_.getUserRole());
+        UserInfo user2 = new UserInfo(user2_.getUserName(), user2_.getLocation(), user2_.getUserRole());
+        UserInfo store = new UserInfo(store_.getUserName(), store_.getLocation(), store_.getUserRole());
 
         DeliveryAddDto deliveryAddDto1 = new DeliveryAddDto(user1, store, 1L, 1000);
         DeliveryAddDto deliveryAddDto2 = new DeliveryAddDto(user2, store, 2L, 2000);
@@ -152,8 +160,11 @@ public class DeliveryServiceTest {
     @Test
     public void acceptDelivery_validRequest() {
         // given
-        User user = userRepository.findById(customerId1).orElseThrow();
-        Store store = storeRepository.findById(getStoreId).orElseThrow();
+        User user_ = userRepository.findById(customerId1).orElseThrow();
+        User store_ = userRepository.findById(storeId).orElseThrow();
+
+        UserInfo user = new UserInfo(user_.getUserName(), user_.getLocation(), user_.getUserRole());
+        UserInfo store = new UserInfo(store_.getUserName(), store_.getLocation(), store_.getUserRole());
 
         DeliveryAddDto deliveryAddDto = new DeliveryAddDto(user, store, 1L, 1000);
         Long deliveryId = deliveryService.requestDelivery(storeId, deliveryAddDto);
@@ -170,8 +181,11 @@ public class DeliveryServiceTest {
     @Test
     public void acceptDelivery_invalidRequest() {
         // given
-        User user = userRepository.findById(customerId1).orElseThrow();
-        Store store = storeRepository.findById(getStoreId).orElseThrow();
+        User user_ = userRepository.findById(customerId1).orElseThrow();
+        User store_ = userRepository.findById(storeId).orElseThrow();
+
+        UserInfo user = new UserInfo(user_.getUserName(), user_.getLocation(), user_.getUserRole());
+        UserInfo store = new UserInfo(store_.getUserName(), store_.getLocation(), store_.getUserRole());
 
         DeliveryAddDto deliveryAddDto = new DeliveryAddDto(user, store, 1L, 1000);
         Long deliveryId = deliveryService.requestDelivery(storeId, deliveryAddDto);
@@ -184,8 +198,11 @@ public class DeliveryServiceTest {
     @Test
     public void denyDelivery_validRequest() {
         // given
-        User user = userRepository.findById(customerId1).orElseThrow();
-        Store store = storeRepository.findById(getStoreId).orElseThrow();
+        User user_ = userRepository.findById(customerId1).orElseThrow();
+        User store_ = userRepository.findById(storeId).orElseThrow();
+
+        UserInfo user = new UserInfo(user_.getUserName(), user_.getLocation(), user_.getUserRole());
+        UserInfo store = new UserInfo(store_.getUserName(), store_.getLocation(), store_.getUserRole());
 
         DeliveryAddDto deliveryAddDto = new DeliveryAddDto(user, store, 1L, 1000);
         Long deliveryId = deliveryService.requestDelivery(storeId, deliveryAddDto);
@@ -201,8 +218,11 @@ public class DeliveryServiceTest {
     @Test
     public void denyAndNextPriorityAccept() {
         // given
-        User user = userRepository.findById(customerId1).orElseThrow();
-        Store store = storeRepository.findById(getStoreId).orElseThrow();
+        User user_ = userRepository.findById(customerId1).orElseThrow();
+        User store_ = userRepository.findById(storeId).orElseThrow();
+
+        UserInfo user = new UserInfo(user_.getUserName(), user_.getLocation(), user_.getUserRole());
+        UserInfo store = new UserInfo(store_.getUserName(), store_.getLocation(), store_.getUserRole());
 
         DeliveryAddDto deliveryAddDto = new DeliveryAddDto(user, store, 1L, 1000);
         Long deliveryId = deliveryService.requestDelivery(storeId, deliveryAddDto);
@@ -228,8 +248,11 @@ public class DeliveryServiceTest {
     @Test
     public void doneDelivery_validRequest() {
         // given
-        User user = userRepository.findById(customerId1).orElseThrow();
-        Store store = storeRepository.findById(getStoreId).orElseThrow();
+        User user_ = userRepository.findById(customerId1).orElseThrow();
+        User store_ = userRepository.findById(storeId).orElseThrow();
+
+        UserInfo user = new UserInfo(user_.getUserName(), user_.getLocation(), user_.getUserRole());
+        UserInfo store = new UserInfo(store_.getUserName(), store_.getLocation(), store_.getUserRole());
 
         DeliveryAddDto deliveryAddDto = new DeliveryAddDto(user, store, 1L, 1000);
         Long deliveryId = deliveryService.requestDelivery(storeId, deliveryAddDto);
@@ -247,8 +270,11 @@ public class DeliveryServiceTest {
     @Test
     public void doneDelivery_invalidRequest() {
         // given
-        User user = userRepository.findById(customerId1).orElseThrow();
-        Store store = storeRepository.findById(getStoreId).orElseThrow();
+        User user_ = userRepository.findById(customerId1).orElseThrow();
+        User store_ = userRepository.findById(storeId).orElseThrow();
+
+        UserInfo user = new UserInfo(user_.getUserName(), user_.getLocation(), user_.getUserRole());
+        UserInfo store = new UserInfo(store_.getUserName(), store_.getLocation(), store_.getUserRole());
 
         DeliveryAddDto deliveryAddDto = new DeliveryAddDto(user, store, 1L, 1000);
         Long deliveryId = deliveryService.requestDelivery(storeId, deliveryAddDto);

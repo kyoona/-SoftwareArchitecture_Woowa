@@ -8,13 +8,13 @@ import sa.domain.*;
 @AllArgsConstructor
 public class DeliveryResDto {
     private Long deliveryId;
-    private User user;
-    private Store store;
+    private UserInfo customer;
+    private UserInfo store;
     private Long orderId;
     private int deliveryPrice;
     public DeliveryResDto(Delivery delivery) {
         this.deliveryId = delivery.getId();
-        this.user = delivery.getUser();
+        this.customer = delivery.getUser();
         this.store = delivery.getStore();
         this.orderId = delivery.getOrderId();
         this.deliveryPrice = delivery.getDeliveryPrice();
