@@ -12,21 +12,36 @@ import lombok.Setter;
 @Entity
 public class Delivery {
 
-    @Column(name = "deliveryId")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "deliveryId")
     private Long id;
 
-    @JoinColumn(name = "userId")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "userName", column = @Column(name = "user_userName")),
+            @AttributeOverride(name = "location", column = @Column(name = "user_location")),
+            @AttributeOverride(name = "userRole", column = @Column(name = "user_userRole")),
+            @AttributeOverride(name = "location.locationName", column = @Column(name = "user_locationName")),
+            @AttributeOverride(name = "location.x", column = @Column(name = "user_x")),
+            @AttributeOverride(name = "location.y", column = @Column(name = "user_y"))
+    })
+    private UserInfo user;
 
-    @JoinColumn(name = "storeId")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Store store;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "userName", column = @Column(name = "store_userName")),
+            @AttributeOverride(name = "location", column = @Column(name = "store_location")),
+            @AttributeOverride(name = "userRole", column = @Column(name = "store_userRole")),
+            @AttributeOverride(name = "location.locationName", column = @Column(name = "store_locationName")),
+            @AttributeOverride(name = "location.x", column = @Column(name = "store_x")),
+            @AttributeOverride(name = "location.y", column = @Column(name = "store_y"))
+    })
+    private UserInfo store;
 
     @Setter
     private int deliveryManPriorIdx;
+
     @Setter
     private int deliveryPrice;
 
@@ -36,7 +51,7 @@ public class Delivery {
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus = DeliveryStatus.WAIT;
 
-    public static Delivery create(User user, Store store, Long orderId, int deliveryPrice){
+    public static Delivery create(UserInfo user, UserInfo store, Long orderId, int deliveryPrice){
         Delivery delivery = new Delivery();
         delivery.user = user;
         delivery.store = store;

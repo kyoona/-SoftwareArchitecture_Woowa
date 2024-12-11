@@ -3,17 +3,14 @@ package sa.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import sa.domain.Location;
-import sa.domain.Order;
-import sa.domain.Store;
-import sa.domain.User;
+import sa.domain.*;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeliveryAddDto {
-    private User user;
-    private Store store;
+    private UserInfo user;
+    private UserInfo store;
     private Long orderId;
     private int deliveryPrice;
 }
