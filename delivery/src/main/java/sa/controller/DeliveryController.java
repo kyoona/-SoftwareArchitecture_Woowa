@@ -16,7 +16,7 @@ public class DeliveryController {
 
     private final DeliveryService deliveryService;
 
-    @PostMapping(path = "reqeuest")
+    @PostMapping(path = "request")
     public SimpleResDto requestDelivery(@PathVariable Long userId,
                                         @RequestBody DeliveryAddDto deliveryAddDto) {
 
