@@ -48,12 +48,12 @@ public class PaymentController {
     }
 
     @PostMapping("/save/credit-card")
-    public void saveAccountTransfer(@RequestBody CreditCard creditCard) {
+    public void saveCreditCard(@RequestBody CreditCard creditCard) {
         paymentService.savePaymentMethod(creditCard);
     }
 
     @PostMapping("/save/woowa-payment")
-    public void saveAccountTransfer(@RequestBody WoowaPayment woowaPayment) {
+    public void saveWoowaPayment(@RequestBody WoowaPayment woowaPayment) {
         paymentService.savePaymentMethod(woowaPayment);
     }
 }
