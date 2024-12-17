@@ -1,3 +1,6 @@
+server:
+  port:
+    8082
 spring:
   datasource:
     url: ${MYSQL_URL}?serverTimezone=Asia/Seoul
@@ -29,9 +32,7 @@ spring:
       buffer-memory: 1048576
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-  config:
-    import:
-      application-private.yml
+
 logging:
   level:
     root: INFO
