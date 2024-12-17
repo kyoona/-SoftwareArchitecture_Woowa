@@ -70,13 +70,12 @@ public class OrderService {
 
     @Transactional
     public void setPaymentStatus(Long orderId, boolean success) {
-        System.out.println("에에에??" + success + " " + orderId);
         Order order = orderRepository.findById(orderId).orElseThrow();
         if (success) {
             order.setOrderStatus(OrderStatus.PAYMENT_SUCCESS);
+            orderScheduler.reserve(orderId, () -> orderEventPublisher.publishOrderEvent(orderId));
         } else {
             order.setOrderStatus(OrderStatus.PAYMENT_FAILED);
-            orderScheduler.reserve(orderId, () -> orderEventPublisher.publishOrderEvent(orderId));
         }
     }
 
