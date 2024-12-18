@@ -1,3 +1,6 @@
+server:
+  port:
+    8083
 spring:
   datasource:
     url: ${MYSQL_URL}?serverTimezone=Asia/Seoul
