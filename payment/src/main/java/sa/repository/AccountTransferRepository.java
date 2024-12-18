@@ -1,5 +1,6 @@
 package sa.repository;
 
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -27,7 +28,7 @@ public class AccountTransferRepository implements PaymentMethodRepository<Accoun
     @Override
     public AccountTransfer findByUserId(Long userId) {
         return query.selectFrom(accountTransfer)
-                .where(QAccountTransfer.accountTransfer.userId.eq(userId))
-                .fetchOne();
+                .where(accountTransfer.userId.eq(userId))
+                .fetchFirst();
     }
 }

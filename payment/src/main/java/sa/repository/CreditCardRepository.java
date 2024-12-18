@@ -27,7 +27,7 @@ public class CreditCardRepository implements PaymentMethodRepository<CreditCard>
     public CreditCard findByUserId(Long userId) {
         return query.selectFrom(creditCard)
                 .where(creditCard.userId.eq(userId))
-                .fetchOne();
+                .fetchFirst();
     }
 
 }

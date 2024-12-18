@@ -27,7 +27,7 @@ public class WoowaPaymentRepository implements PaymentMethodRepository<WoowaPaym
     public WoowaPayment findByUserId(Long userId) {
         return query.selectFrom(woowaPayment)
                 .where(woowaPayment.userId.eq(userId))
-                .fetchOne();
+                .fetchFirst();
     }
 
 }
