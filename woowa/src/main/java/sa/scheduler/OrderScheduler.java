@@ -33,7 +33,7 @@ public class OrderScheduler {
     }
 
     private Date calculateStartTimeFor3Min() {
-        long delayInMillis = 3 * 60 * 1000;
+        long delayInMillis = 1 * 60 * 1000;
         return new Date(System.currentTimeMillis() + delayInMillis);
     }
 }
