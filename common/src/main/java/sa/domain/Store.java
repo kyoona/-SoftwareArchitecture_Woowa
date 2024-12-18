@@ -27,7 +27,7 @@ public class Store {
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Menu> menuList = new ArrayList<>();
 
-    protected Store(String storeName, Location location, int deliveryPrice, int minimumOrderPrice) {
+    public Store(String storeName, Location location, int deliveryPrice, int minimumOrderPrice) {
         this.storeName = storeName;
         this.location = location;
         this.deliveryPrice = deliveryPrice;
